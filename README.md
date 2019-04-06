@@ -1,9 +1,10 @@
 # grupo12C-2019S1
 
-##Materia: Desarrollo de aplicaciones
+**Materia: Desarrollo de aplicaciones**
 
-###Enunciado: 
-Eventeando
+*Enunciado*: 
+
+**Eventeando**
 
 Hoy en día es común encontrar sitios o aplicaciones que nos ayudan a organizar un encuentro con
 amigos, una fiesta o cualquier otro tipo de evento donde sea necesario conocer la cantidad de
@@ -12,14 +13,16 @@ Eventeando busca crear una nueva aplicación donde no solo se puedan crear event
 asistentes, calcular las comprar, dividir gastos y más, sino también contar con una cuenta corriente
 que permita a los usuarios ingresar dinero a través de distintos medios, solicitar micro préstamos o
 prestar dinero a sus amigos, por ejemplo.
+
 Con eventeando se podrán organizar tres tipos de eventos, los cuales se describen a continuación:
-● Fiesta: En este caso se envían invitaciones a través de la aplicación y por cada confirmación
+> Fiesta: En este caso se envían invitaciones a través de la aplicación y por cada confirmación
 de asistencia, la aplicación va calculando la cantidad de mercaderías a comprar. En este tipo
 de eventos no se distribuyen los gastos del mismo sino que corren por cuenta del
 organizador. Al momento de crear el evento, el organizador no sólo ingresa una lista de
 usuarios a los cuales invitar sino también hasta cuanto tiempo antes se admiten
 confirmaciones.
-● Baquita: En este caso se determina el evento a realizar y sus gastos (comida, alquiler de
+
+> Baquita: En este caso se determina el evento a realizar y sus gastos (comida, alquiler de
 salon, etc) y a partir de la cantidad de asistentes la aplicación determina cuánto debe pagar
 cada uno de ellos.
 La baquita puede tener dos modalidades. En la primera, una o más personas realizan las
@@ -28,10 +31,12 @@ segunda, la aplicación calcula un costo estimado total para el evento (se puede
 información propia o ingresada por los usuarios), crea una cuenta común a la cual deberán
 girar su parte los asistentes y una vez reunido el dinero, el organizador puede disponer de los
 mismos para las compras.
-● Canasta: Este es un tipo de evento similar a la baquita, pero la diferencia radica en que en
+
+> Canasta: Este es un tipo de evento similar a la baquita, pero la diferencia radica en que en
 lugar de dividir los gastos en cuotas iguales a pagar por los asistentes, se presenta la lista de
 gastos a realizar y, al mejor estilo scrum meeting, cada asistente elige un ítem del cual
 hacerse cargo.
+
 Adicionalmente, para cada tipo de evento la aplicación debe permitir configurar templates, los cuales
 pueden ser elegidos por los usuarios al momento de crear un evento, de modo de facilitar su
 organización. Por ejemplo, un template para asado con amigos en modalidad canasta, podría
@@ -44,11 +49,13 @@ templates que hayan sido utilizados por otros usuarios que eligieron el template
 clasico, quien compró esto también compró esto otro)
 Los usuarios que deseen utilizar eventeando deberán registrarse en la aplicación, para lo cual será
 necesaria la siguiente información:
+>>
 1. Nombre: Texto - Max 30 - Requerido.
 2. Apellido: Texto - Max 30 - Requerido.
 3. Email: Formato_email - Requerido
 4. Contraseña: Min 4 - Max 10 - Alfanumérico - Requerido.
 5. Fecha de Nacimiento : DD/MM/AAAA - Requerido
+>>
 También será necesario ofrecer un sistema de autenticación mediante auth0 con cuentas de Gmail.
 Las invitaciones a eventos se realizarán enviando correos electrónicos a los participantes, los cuales
 deberán registrarse en la aplicación para poder tomar parte del evento en cuestión.
