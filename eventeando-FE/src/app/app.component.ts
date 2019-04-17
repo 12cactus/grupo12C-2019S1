@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ApiService} from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Arma tu evento!';
+
+    constructor(private apiService: ApiService) {}
+
+    ping() {
+        this.apiService.get('ping').subscribe(response => console.log(response));
+    }
 }
