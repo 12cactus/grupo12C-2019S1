@@ -14,5 +14,5 @@ script:
 #deploy:
 #  - provider: heroku
 #    skip_cleanup: true
-#    api_key: d75c7509-1a26-4283-ba25-3e59df710b8f
+#    api_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 #    app: eventeando
