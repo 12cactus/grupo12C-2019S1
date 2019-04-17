@@ -21,6 +21,6 @@ class PingControllerTests {
     fun `returns pong`() {
         mvc.perform(get("/ping"))
                 .andExpect(status().isOk)
-                .andExpect(content().string("pong"))
+                .andExpect(content().json("""{"name" : "pong"}"""))
     }
 }
