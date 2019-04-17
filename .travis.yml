@@ -1,2 +1,19 @@
 language: java
-jdk: oraclejdk8
+sudo: required
+#cache:
+#  directories:
+#    - $HOME/.m2
+jdk:
+  - oraclejdk8
+
+script:
+  - cd eventeando-BE
+  - ./gradlew assemble
+  - ./gradlew check
+  - ./gradlew test
+
+#deploy:
+#  - provider: heroku
+#    skip_cleanup: true
+#    api_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#    app: eventeando
