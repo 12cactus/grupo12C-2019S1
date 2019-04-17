@@ -38,7 +38,7 @@ class InvitadoTest: JavaSpec<InvitadoContextTest>() {
 
     private fun canastaConInvitados(): Supplier<Evento> {
         return Supplier {
-            Canasta.crear(emptyList(), listOf(context().invitado(), Invitado.crear("otro invitado")))
+            Canasta.crear(mutableListOf(), mutableListOf(context().invitado(), Invitado.crear("otro invitado")))
         }
     }
 }

@@ -17,8 +17,8 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
             context().canasta(Supplier { Canasta.crear(context().gastos(), context().invitados()) })
 
             describe("sin gastos"){
-                context().gastos(Supplier { emptyList<Gasto>() })
-                context().invitados(Supplier { emptyList<Invitado>() })
+                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
+                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
 
                 describe("cuando consultamos la lista de gastos"){
                     it("obtenemos la lista vacia") {
@@ -34,8 +34,8 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
             }
 
             describe("con gastos"){
-                context().gastos(Supplier { gastos() })
-                context().invitados(Supplier { emptyList<Invitado>() })
+                context().gastos(Supplier { gastos().toMutableList() })
+                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
 
                 describe("cuando consultamos la lista de gastos"){
                     it("obtenemos una cantidad de gastos") {
@@ -51,8 +51,8 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
             }
 
             describe("sin invitados"){
-                context().invitados(Supplier { emptyList<Invitado>() })
-                context().gastos(Supplier { emptyList<Gasto>() })
+                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
+                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
 
                 describe("cuando consultamos la lista de invitados"){
                     it("obtenemos una nula de invitados") {
@@ -63,8 +63,8 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
 
             describe("con invitados sin confirmar"){
                 context().invitado(Supplier { Invitado.crear("invitado") })
-                context().invitados(Supplier { listOf(context().invitado(), Invitado.crear("otro invitado")) })
-                context().gastos(Supplier { emptyList<Gasto>() })
+                context().invitados(Supplier { mutableListOf(context().invitado(), Invitado.crear("otro invitado")) })
+                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
 
                 describe("cuando consultamos la lista de invitados"){
                     it("obtenemos 2 invitados") {
