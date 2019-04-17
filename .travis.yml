@@ -8,8 +8,9 @@ jdk:
 
 script:
   - cd eventeando-BE
-  - gradle clean
-  - gradle build
+  - ./gradlew assemble
+  - ./gradlew check
+  - ./gradlew test
 
 #deploy:
 #  - provider: heroku
