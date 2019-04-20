@@ -4,11 +4,8 @@ import edu.unq.desapp.eventeando.gasto.Gasto
 import edu.unq.desapp.eventeando.invitado.Invitado
 import java.time.LocalDate
 
-class Baquita : Evento{
+class Baquita : Evento() {
 
-    private var gastos: MutableList<Gasto> = mutableListOf()
-    private var invitados: MutableList<Invitado> = mutableListOf()
-    private var fechaConfirmacion: LocalDate = LocalDate.now()
 
     companion object {
         fun crear( invitados: MutableList<Invitado>, fecha: LocalDate): Baquita {
@@ -19,33 +16,7 @@ class Baquita : Evento{
         }
     }
 
-    override fun invitados(): MutableList<Invitado> {
-        return invitados
-    }
 
-    override fun gastos(): MutableList<Gasto> {
-        return gastos
-    }
-
-    override  fun valorTotal(): Int{
-        return gastos.fold(0) { total, gasto -> total + gasto.valor() }
-    }
-
-    override fun invitadosConfirmados(): List<Invitado>{
-        return invitados.filter { invitado -> invitado.asisteA(this)  }
-    }
-
-    override fun getFechaLimite(): LocalDate{
-        return fechaConfirmacion
-    }
-
-    override fun invitar(usuario: Invitado){
-        this.invitados.add(usuario)
-    }
-
-    override fun cargar(gasto: Gasto) {
-        gastos.add(gasto)
-    }
 
     fun gastoPorConfirmado(): Int{
         return valorTotal() / invitadosConfirmados().size
