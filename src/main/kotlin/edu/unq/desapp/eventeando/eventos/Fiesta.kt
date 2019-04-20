@@ -8,6 +8,7 @@ class Fiesta : Evento
 {
     private var invitados: MutableList<Invitado> = mutableListOf()
     private var fechaConfirmacion: LocalDate = LocalDate.now()
+    private var gastos: MutableList<Gasto> = mutableListOf()
 
     companion object {
         fun crear( invitados: MutableList<Invitado>, fecha: LocalDate): Fiesta {
@@ -22,13 +23,19 @@ class Fiesta : Evento
         fechaConfirmacion = fecha
     }
 
+    override fun cargar(gasto: Gasto){
+        gastos.add(gasto)
+    }
+
     override fun getFechaLimite(): LocalDate {
         return fechaConfirmacion
     }
 
-    override fun gastos(): MutableList<Gasto> = mutableListOf()
+    override fun gastos(): MutableList<Gasto> = gastos
 
-    override fun valorTotal(): Int = this.invitadosConfirmados().size
+    override fun valorTotal(): Int {
+        return invitadosConfirmados().size * gastos.fold(0) { total, gasto -> total + gasto.valor() }
+    }
 
     override fun invitados(): MutableList<Invitado> = this.invitados
 
@@ -40,4 +47,5 @@ class Fiesta : Evento
     override fun invitar(usuario: Invitado) {
         this.invitados.add(usuario)
     }
+
 }

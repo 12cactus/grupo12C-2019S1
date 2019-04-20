@@ -5,22 +5,27 @@ import edu.unq.desapp.eventeando.invitado.Invitado
 import java.time.LocalDate
 
 class Canasta : Evento{
-    private var listaDeGastos: MutableList<Gasto> = mutableListOf()
+    override fun cargar(gasto: Gasto) {
+        gastos.add(gasto)
+    }
+
+    private var gastos: MutableList<Gasto> = mutableListOf()
     private var invitados: MutableList<Invitado> = mutableListOf()
     private var fechaConfirmacion: LocalDate = LocalDate.now()
 
     companion object {
-        fun crear(gastos: MutableList<Gasto>, invitados: MutableList<Invitado>): Canasta {
+        fun crear(gastos: MutableList<Gasto>, invitados: MutableList<Invitado>, confirmacion: LocalDate): Canasta {
             val canasta = Canasta()
-            canasta.listaDeGastos = gastos
+            canasta.gastos = gastos
             canasta.invitados = invitados
+            canasta.fechaConfirmacion = confirmacion
             return canasta
         }
     }
 
-    override fun gastos(): MutableList<Gasto> = this.listaDeGastos
+    override fun gastos(): MutableList<Gasto> = this.gastos
 
-    override fun valorTotal(): Int = this.listaDeGastos.fold(0) { total, gasto -> total + gasto.valor() }
+    override fun valorTotal(): Int = this.gastos.fold(0) { total, gasto -> total + gasto.valor() }
 
     override fun invitados(): MutableList<Invitado> = this.invitados
 

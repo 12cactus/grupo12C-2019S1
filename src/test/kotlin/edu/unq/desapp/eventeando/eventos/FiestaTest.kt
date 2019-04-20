@@ -3,10 +3,9 @@ package edu.unq.desapp.eventeando.eventos
 
 import ar.com.dgarcia.javaspec.api.JavaSpec
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner
+import edu.unq.desapp.eventeando.gasto.Gasto
 import edu.unq.desapp.eventeando.invitado.Invitado
 import java.time.LocalDate
-
-
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
 import java.util.function.Supplier
@@ -24,7 +23,7 @@ class FiestaTest: JavaSpec<FiestaContextTest>() {
             context().fiesta( Supplier { Fiesta.crear( context().invitados(), mañana ) })
 
             describe("sin invitados"){
-                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
+                context().invitados(Supplier { mutableListOf<Invitado>() })
                 
                 describe("cuando pedimos los gastos") {
                     it("obtenemos valor neutro") {
@@ -39,30 +38,46 @@ class FiestaTest: JavaSpec<FiestaContextTest>() {
                         assertThat(context().fiesta().invitados().size).isEqualTo(1)
                     }
                 }
-            }
 
-            describe("con invitado sin confirmar") {
-                context().invitado(Supplier { Invitado.crear("invitado") })
-                context().invitados(Supplier { mutableListOf(context().invitado()) })
+                describe("sin gastos"){
+                    context().gastos(Supplier { mutableListOf<Gasto>() })
 
-                describe("cuando pedimos los gastos") {
-                    it("obtenemos valor neutro") {
-                        assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                    describe("cuando pedimos gastos"){
+                        it("obtenemos el valor neutro"){
+                            assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                        }
                     }
                 }
 
-                describe("cuando el invitado confirma asistencia a la fiesta") {
-                    describe("cuando pedimos los gastos") {
-                        it("obtenemos el valor 1") {
-                            context().invitado().asistirA(context().fiesta())
-                            assertThat(context().fiesta().valorTotal()).isEqualTo(1)
+                describe("con un gasto") {
+                    context().gasto(Supplier { Gasto.crear(100, "sarasa") })
+
+                    describe("con invitado sin confirmar") {
+                        context().invitado(Supplier { Invitado.crear("invitado") })
+                        context().invitados(Supplier { mutableListOf(context().invitado()) })
+
+                        describe("cuando pedimos los gastos") {
+                            it("obtenemos valor neutro") {
+                                context().fiesta().cargar(context().gasto())
+                                assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                            }
+                        }
+
+                        describe("cuando el invitado confirma asistencia a la fiesta") {
+                            describe("cuando pedimos los gastos") {
+                                it("obtenemos el valor 100") {
+                                    context().invitado().asistirA(context().fiesta())
+                                    context().fiesta().cargar(context().gasto())
+                                    assertThat(context().fiesta().valorTotal()).isEqualTo(100)
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        describe("Dado un evento fiesta") {
+        describe("Dado un evento fiesta con fecha caduca de confirmación") {
             context().fiesta(Supplier { Fiesta.crear(context().invitados(), ayer) })
 
             describe("cuando el invitado confirma asistencia pasada la fecha de confirmación") {
@@ -73,10 +88,7 @@ class FiestaTest: JavaSpec<FiestaContextTest>() {
                     context().invitado().asistirA(context().fiesta())
                     assertThat(context().fiesta().invitadosConfirmados().size).isEqualTo(0)
                 }
-
             }
         }
-
-
     }
 }

@@ -11,4 +11,5 @@ interface Evento{
     fun invitadosConfirmados(): List<Invitado>
     fun getFechaLimite(): LocalDate
     fun invitar(usuario: Invitado)
+    fun cargar(gasto: Gasto)
 }

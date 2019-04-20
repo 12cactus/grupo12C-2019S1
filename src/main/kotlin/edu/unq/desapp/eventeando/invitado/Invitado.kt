@@ -1,10 +1,11 @@
 package edu.unq.desapp.eventeando.invitado
 
 import edu.unq.desapp.eventeando.eventos.Evento
+import edu.unq.desapp.eventeando.gasto.Gasto
 import java.time.LocalDate
 
 class Invitado {
-    private var eventosConfirmados: List<Evento> = emptyList()
+    private var eventosConfirmados: MutableList<Evento> = mutableListOf()
     private lateinit var nombre: String
 
     companion object {
@@ -21,12 +22,13 @@ class Invitado {
 
     fun asistirA(evento: Evento) {
         if(LocalDate.now().isBefore(evento.getFechaLimite())){
-            print(evento.getFechaLimite())
-            val eventosConfirmadosActualizado: MutableList<Evento> = mutableListOf()
-            eventosConfirmadosActualizado.addAll(this.eventosConfirmados)
-            eventosConfirmadosActualizado.add(evento)
-            this.eventosConfirmados = eventosConfirmadosActualizado.toList()
+            eventosConfirmados.add(evento)
         }
+    }
+
+    fun agregarGasto(gasto: Gasto, evento: Evento){
+        gasto.setInvitado(this)
+        evento.cargar(gasto)
     }
 
 }

@@ -6,19 +6,23 @@ import edu.unq.desapp.eventeando.gasto.Gasto
 import edu.unq.desapp.eventeando.invitado.Invitado
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
+import java.time.LocalDate
 import java.util.function.Supplier
 
 @RunWith(JavaSpecRunner::class)
 class CanastaTest: JavaSpec<CanastaContextTest>() {
+    var hoy = LocalDate.now()
+    var ayer = hoy.minusDays (1)
+    var mañana = hoy.plusDays(1)
 
     override fun define()
     {
         describe("Dado un evento canasta") {
-            context().canasta(Supplier { Canasta.crear(context().gastos(), context().invitados()) })
+            context().canasta(Supplier { Canasta.crear(context().gastos(), context().invitados(), mañana) })
 
             describe("sin gastos"){
-                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
-                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
+                context().gastos(Supplier { mutableListOf<Gasto>() })
+                context().invitados(Supplier { mutableListOf<Invitado>() })
 
                 describe("cuando consultamos la lista de gastos"){
                     it("obtenemos la lista vacia") {
@@ -35,7 +39,7 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
 
             describe("con gastos"){
                 context().gastos(Supplier { gastos().toMutableList() })
-                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
+                context().invitados(Supplier { mutableListOf<Invitado>() })
 
                 describe("cuando consultamos la lista de gastos"){
                     it("obtenemos una cantidad de gastos") {
@@ -51,8 +55,8 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
             }
 
             describe("sin invitados"){
-                context().invitados(Supplier { emptyList<Invitado>().toMutableList() })
-                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
+                context().invitados(Supplier { mutableListOf<Invitado>() })
+                context().gastos(Supplier { mutableListOf<Gasto>() })
 
                 describe("cuando consultamos la lista de invitados"){
                     it("obtenemos una nula de invitados") {
@@ -64,7 +68,7 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
             describe("con invitados sin confirmar"){
                 context().invitado(Supplier { Invitado.crear("invitado") })
                 context().invitados(Supplier { mutableListOf(context().invitado(), Invitado.crear("otro invitado")) })
-                context().gastos(Supplier { emptyList<Gasto>().toMutableList() })
+                context().gastos(Supplier { mutableListOf<Gasto>() })
 
                 describe("cuando consultamos la lista de invitados"){
                     it("obtenemos 2 invitados") {
@@ -77,11 +81,9 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
                 }
 
                 describe("cuando un invitado confirma asistir al evento canasta"){
-                    describe("si consultamos los invitados confirmados") {
-                        it("obtenemos una lista con un invitado") {
-                            context().invitado().asistirA(context().canasta())
-                            assertThat(context().canasta().invitadosConfirmados().count()).isEqualTo(1)
-                        }
+                    it("obtenemos una lista con un invitado") {
+                        context().invitado().asistirA(context().canasta())
+                        assertThat(context().canasta().invitadosConfirmados().size).isEqualTo(1)
                     }
                 }
             }
@@ -89,7 +91,7 @@ class CanastaTest: JavaSpec<CanastaContextTest>() {
     }
 
     private fun gastos(): List<Gasto> {
-        val gastosDeCanasta = listOf(Gasto.crear(5), Gasto.crear(5))
+        val gastosDeCanasta = listOf(Gasto.crear(5, "fafafa"), Gasto.crear(5, "chicles"))
         return gastosDeCanasta
     }
 }

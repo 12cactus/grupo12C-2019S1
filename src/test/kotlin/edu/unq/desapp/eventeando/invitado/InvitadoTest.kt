@@ -6,6 +6,7 @@ import edu.unq.desapp.eventeando.eventos.Canasta
 import edu.unq.desapp.eventeando.eventos.Evento
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
+import java.time.LocalDate
 import java.util.function.Supplier
 
 @RunWith(JavaSpecRunner::class)
@@ -38,7 +39,7 @@ class InvitadoTest: JavaSpec<InvitadoContextTest>() {
 
     private fun canastaConInvitados(): Supplier<Evento> {
         return Supplier {
-            Canasta.crear(mutableListOf(), mutableListOf(context().invitado(), Invitado.crear("otro invitado")))
+            Canasta.crear(mutableListOf(), mutableListOf(context().invitado(), Invitado.crear("otro invitado")), LocalDate.now().plusDays(1))
         }
     }
 }
