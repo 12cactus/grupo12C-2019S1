@@ -2,28 +2,17 @@ package edu.unq.desapp.eventeando.eventos
 
 import edu.unq.desapp.eventeando.gasto.Gasto
 import edu.unq.desapp.eventeando.invitado.Invitado
+import java.time.LocalDate
 
-class Canasta : Evento{
-    private var listaDeGastos: List<Gasto> = emptyList()
-    private var invitados: List<Invitado> = emptyList()
+class Canasta : Evento(){
 
     companion object {
-        fun crear(gastos: List<Gasto>, invitados: List<Invitado>): Canasta {
+        fun crear(gastos: MutableList<Gasto>, invitados: MutableList<Invitado>, confirmacion: LocalDate): Canasta {
             val canasta = Canasta()
-            canasta.listaDeGastos = gastos
+            canasta.gastos = gastos
             canasta.invitados = invitados
+            canasta.fechaConfirmacion = confirmacion
             return canasta
         }
-    }
-
-    override fun gastos(): List<Gasto> = this.listaDeGastos
-
-    override fun valorTotal(): Int = this.listaDeGastos.fold(0) { total, gasto -> total + gasto.valor() }
-
-    override fun invitados(): List<Invitado> = this.invitados
-
-    override fun invitadosConfirmados(): List<Invitado> {
-        val confirmados = this.invitados.filter { invitado -> invitado.asisteA(this) }
-        return confirmados
     }
 }
