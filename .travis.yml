@@ -9,4 +9,4 @@ cache:
     - $HOME/.m2
 
 after_success:
-  - ./gradlew jacocoTestReportCodacyUpload --codacy-token $CODACY_PROJECT_TOKEN
+  - ./gradlew jacocoTestReportCodacyUpload --projectToken $CODACY_PROJECT_TOKEN
