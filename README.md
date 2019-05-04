@@ -1,5 +1,9 @@
 # grupo12C-2019S1
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba154d4f36bd48a7b8abea8cb97fcba4)](https://www.codacy.com/app/mdAlvarenga/grupoC-2019S1-BE?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=12cactus/grupoC-2019S1-BE&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ba154d4f36bd48a7b8abea8cb97fcba4)](https://www.codacy.com/app/mdAlvarenga/grupoC-2019S1-BE?utm_source=github.com&utm_medium=referral&utm_content=12cactus/grupoC-2019S1-BE&utm_campaign=Badge_Coverage)
+[![Build Status](https://travis-ci.com/12cactus/grupoC-2019S1-BE.svg?branch=master)](https://travis-ci.com/12cactus/grupoC-2019S1-BE)
+
 **Materia: Desarrollo de aplicaciones**
 
 *Enunciado*: 
