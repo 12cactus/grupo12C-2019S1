@@ -11,6 +11,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
+    codacy
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -19,6 +20,8 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url "https://jitpack.io" }
+    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
 }
 
 dependencies {
@@ -28,6 +31,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "info.kfgodel:java-spec:$java_spec_version"
+    codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
 }
 
 compileKotlin {
@@ -42,4 +46,16 @@ compileTestKotlin {
         freeCompilerArgs = ['-Xjsr305=strict']
         jvmTarget = '1.8'
     }
+}
+
+task sendCoverageToCodacy(type: JavaExec) {
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = configurations.codacy
+    args = [
+            "report",
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    ]
 }
