@@ -14,7 +14,7 @@ import java.util.function.Supplier
 class MovementTest: JavaSpec<MovementContextTest>() {
     override fun define(){
         describe("Dado un guest sin movimientos"){
-            context().guest(Supplier { Guest("Jhon Snow") })
+            context().guest(Supplier { Guest() })
 
             describe("El inviado realiza un bankDeposit de 100"){
                 it("El guest tiene un Movement del type BANKDEPOSIT de 100 en su cuenta"){

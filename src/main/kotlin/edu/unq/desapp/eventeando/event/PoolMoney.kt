@@ -10,28 +10,31 @@ import java.time.LocalDate
 class PoolMoney(date: LocalDate) : Event(date) {
 
     /**
-     * TODO
+     * @return cost avg per confirmed guest
      */
     fun costPerConfirmedGuest(): Int{
         return totalCost() / confirmedGuests().size
     }
 
     /**
-     * TODO
+     * @param guest .
+     * @return balance between expenses and the cost per guest.
      */
     fun balanceOf(guest: Guest): Int{
         return totalSpendsOf(guest) - this.costPerConfirmedGuest()
     }
 
     /**
-     * TODO
+     * @param guest
+     * @return list of guest's expenses
      */
     fun spendsOf(guest: Guest):List<Spending>{
         return spendings.filter{ spending -> spending.isFrom(guest)}
     }
 
     /**
-     * TODO
+     * @param guest
+     * @return total amount of guest's expenses
      */
     fun totalSpendsOf(guest: Guest): Int{
         return spendsOf(guest).fold(0){ total, gasto -> total + gasto.cost}

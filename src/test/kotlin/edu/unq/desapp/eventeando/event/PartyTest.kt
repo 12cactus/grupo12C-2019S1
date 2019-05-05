@@ -23,41 +23,41 @@ class PartyTest: JavaSpec<PartyContextTest>() {
     val tomorrow = today.plusDays(1)
 
     override fun define() {
-        describe("Dado un event party") {
+        describe("Give an event party") {
             context().party( Supplier { Party("organizador", today, tomorrow ) })
 
-            describe("sin guests"){
+            describe("whitout guests"){
                 context().guests(Supplier { mutableListOf<Guest>() })
                 
-                describe("cuando pedimos los spendings") {
-                    it("obtenemos cost neutro") {
+                describe("when we ask about the spendings") {
+                    it("we get neutral cost") {
                         assertThat(context().party().totalCost()).isEqualTo(0)
                     }
                 }
 
-                describe("cuando se invita aGuest"){
-                    context().guest(Supplier { Guest("aGuest") })
-                    it("obtenemos la cantidad de guests el cost 1"){
+                describe("when we invite an aGuest"){
+                    context().guest(Supplier { Guest() })
+                    it("get the amount of guests equals 1"){
                         context().party().invite(context().guest())
                         assertThat(context().party().guests.size).isEqualTo(1)
                     }
                 }
 
-                describe("sin spendings"){
+                describe("without spendings"){
                     context().spendings(Supplier { mutableListOf<Spending>() })
 
-                    describe("cuando pedimos spendings"){
-                        it("obtenemos el cost neutro"){
+                    describe("when we ask about spendings"){
+                        it("get the neutral cost"){
                             assertThat(context().party().totalCost()).isEqualTo(0)
                         }
                     }
                 }
 
-                describe("con un spending") {
+                describe("with a spending") {
                     context().spending(Supplier { Spending(100, "sarasa") })
 
-                    describe("con guest sin confirmar") {
-                        context().guest(Supplier { Guest("guest") })
+                    describe("with guest without confirmation") {
+                        context().guest(Supplier { Guest() })
                         context().guests(Supplier { mutableListOf(context().guest()) })
 
                         describe("when get the spendings") {
@@ -85,7 +85,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
             context().party(Supplier { Party("organizador", yesterday, today) })
 
             describe("cuando el guest confirma asistencia pasada la fecha de confirmación") {
-                context().guest(Supplier { Guest("guest") })
+                context().guest(Supplier { Guest() })
                 context().guests(Supplier { mutableListOf(context().guest()) })
 
                 it("obtenemos el cost nulo de guests confirmados") {

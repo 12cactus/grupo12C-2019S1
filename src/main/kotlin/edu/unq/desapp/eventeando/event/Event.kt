@@ -9,7 +9,7 @@ import java.time.LocalDate
  * To review
  */
 abstract class Event(val date: LocalDate){
-    val spendings: MutableList<Spending> = mutableListOf()
+    var spendings: MutableList<Spending> = mutableListOf()
     val guests: MutableList<Guest> = mutableListOf()
 
     /**

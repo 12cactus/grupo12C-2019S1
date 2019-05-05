@@ -1,5 +1,6 @@
 package edu.unq.desapp.eventeando.guest
 
+import edu.unq.desapp.eventeando.User.User
 import edu.unq.desapp.eventeando.checkingAccount.Movement
 import edu.unq.desapp.eventeando.checkingAccount.MovementType
 import edu.unq.desapp.eventeando.event.Event
@@ -8,8 +9,9 @@ import java.time.LocalDate
 
 /**
  * Models a person that has events and movements
+ * a SubClass of user
  */
-class Guest(val name: String) {
+class Guest(): User() {
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -76,4 +78,14 @@ class Guest(val name: String) {
         return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -
                 getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
     }
+
+    /**
+     * @return true
+     */
+    override fun isAGuest(): Boolean = true
+
+    /**
+     * @return false
+     */
+    override fun isAOrganizer(): Boolean = false
 }

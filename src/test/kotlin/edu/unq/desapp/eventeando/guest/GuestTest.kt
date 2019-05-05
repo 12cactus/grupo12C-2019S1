@@ -18,7 +18,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
     override fun define()
     {
         describe("Dado un guest") {
-            context().guest(Supplier { Guest("guest") })
+            context().guest(Supplier { Guest() })
             context().event(canastaConInvitados())
 
             describe("que no confirmó asistencia al event"){
