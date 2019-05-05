@@ -1,7 +1,7 @@
-package edu.unq.desapp.eventeando.eventos
+package edu.unq.desapp.eventeando.event
 
 import ar.com.dgarcia.javaspec.api.contexts.TestContext
-import edu.unq.desapp.eventeando.elemento.Elemento
+import edu.unq.desapp.eventeando.element.Element
 import edu.unq.desapp.eventeando.template.Template
 import java.util.function.Supplier
 
@@ -10,10 +10,10 @@ interface TemplateContextTest: TestContext {
     fun template(): Template
     fun template(supplier: Supplier<Template>)
 
-    fun elemento(): Elemento
-    fun elemento(supplier: Supplier<Elemento>)
+    fun element(): Element
+    fun element(supplier: Supplier<Element>)
 
-    fun otroElemento(): Elemento
-    fun otroElemento(supplier: Supplier<Elemento>)
+    fun otherElement(): Element
+    fun otherElement(supplier: Supplier<Element>)
 
 }
