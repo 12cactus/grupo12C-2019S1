@@ -24,7 +24,7 @@ class Template {
     }
 
     fun costPerPerson():Double{
-        return elements.fold(0.00){ total, element -> element.proportionPerPerson() + total}
+        return elements.fold(0.00){ total, element -> element.proportionPerPerson + total}
     }
 
     fun description(): String = description
