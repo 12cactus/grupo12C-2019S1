@@ -2,6 +2,9 @@ package edu.unq.desapp.eventeando.spending
 
 import edu.unq.desapp.eventeando.guest.Guest
 
+/**
+ *
+ */
 class Spending() {
     private var cost: Int = 0
     private var description: String = ""

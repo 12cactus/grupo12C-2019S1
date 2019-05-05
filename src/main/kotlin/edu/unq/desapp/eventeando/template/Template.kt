@@ -2,6 +2,9 @@ package edu.unq.desapp.eventeando.template
 
 import edu.unq.desapp.eventeando.element.Element
 
+/**
+ *
+ */
 class Template {
     private var description: String = ""
     private var title: String = ""
