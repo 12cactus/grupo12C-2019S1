@@ -15,14 +15,14 @@ import org.assertj.core.api.Assertions.assertThat
 class TemplateTest: JavaSpec<TemplateContextTest>() {
     override fun define() {
         describe("dado un template vacio"){
-            context().template(Supplier { Template.crear("asadito","e'pa lo'pibe") })
+            context().template(Supplier { Template("asadito","e'pa lo'pibe") })
 
                 it("se le pide description y retorna: e'pa lo'pibe"){
-                    assertThat(context().template().description()).isEqualTo("e'pa lo'pibe")
+                    assertThat(context().template().description).isEqualTo("e'pa lo'pibe")
                 }
             describe("se le agregan dos elementos"){
-                context().element(Supplier { Element.crear("papas fritas",5.50) })
-                context().otherElement(Supplier { Element.crear("mani pelado",7.00) })
+                context().element(Supplier { Element("papas fritas",5.50) })
+                context().otherElement(Supplier { Element("mani pelado",7.00) })
 
                 it("se le pide el costo por persona el cost es 12.50"){
                     context().template().add(context().element())

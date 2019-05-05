@@ -18,13 +18,13 @@ class GuestTest: JavaSpec<GuestContextTest>() {
     override fun define()
     {
         describe("Dado un guest") {
-            context().guest(Supplier { Guest.crear("guest") })
+            context().guest(Supplier { Guest("guest") })
             context().event(canastaConInvitados())
 
             describe("que no confirmó asistencia al event"){
                 describe("cuando consultamos si asiste"){
                     it("obtenemos que no") {
-                        assertThat(context().guest().attend(context().event())).isFalse()
+                        assertThat(context().guest().isConfirmedFor(context().event())).isFalse()
                     }
                 }
             }
@@ -33,7 +33,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
                 describe("cuando consultamos si asiste"){
                     it("obtenemos que si") {
                         context().guest().attendTo(context().event())
-                        assertThat(context().guest().attend(context().event())).isTrue()
+                        assertThat(context().guest().isConfirmedFor(context().event())).isTrue()
                     }
                 }
             }
@@ -42,7 +42,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
 
     private fun canastaConInvitados(): Supplier<Event> {
         return Supplier {
-            Basket.crear(mutableListOf(), mutableListOf(context().guest(), Guest.crear("otro guest")), LocalDate.now().plusDays(1))
+            Basket(LocalDate.now().plusDays(1))
         }
     }
 }

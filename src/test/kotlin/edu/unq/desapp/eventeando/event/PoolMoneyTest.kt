@@ -18,14 +18,14 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
     var mañana = hoy.plusDays(1)
     override fun define() {
         describe("dado un event PoolMoney"){
-            context().poolMoney( Supplier{ PoolMoney.crear(mutableListOf<Guest>(), mañana) })
+            context().poolMoney( Supplier{ PoolMoney(mañana) })
 
             describe("con 100 de spendings"){
-                context().spending(Supplier { Spending.crear(100, "bebidas") })
+                context().spending(Supplier { Spending(100, "bebidas") })
 
                 describe("con 2 guests"){
-                    context().guest(Supplier { Guest.crear("Moncho") })
-                    context().otherGuest(Supplier { Guest.crear("Rodolfo") })
+                    context().guest(Supplier { Guest("Moncho") })
+                    context().otherGuest(Supplier { Guest("Rodolfo") })
                     describe("cuando pedimos el spending"){
                         it("obtenemos el cost 50"){
                             context().poolMoney().load( context().spending() )
@@ -41,12 +41,12 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
             }
             describe("sin spendings"){
                 describe("con 2 guests") {
-                    context().guest(Supplier { Guest.crear("Moncho") })
-                    context().otherGuest(Supplier { Guest.crear("Rodolfo") })
+                    context().guest(Supplier { Guest("Moncho") })
+                    context().otherGuest(Supplier { Guest("Rodolfo") })
 
                     describe("cada guest agrega un spending distinto"){
-                        context().spending(Supplier { Spending.crear(100, "bebidas") })
-                        context().otherSpend(Supplier { Spending.crear(200, "tutuca") })
+                        context().spending(Supplier { Spending(100, "bebidas") })
+                        context().otherSpend(Supplier { Spending(200, "tutuca") })
 
                         it("cuando pedimos los spendings obtenemos el cost 150"){
                             context().poolMoney().invite(context().guest())
@@ -67,7 +67,6 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
                             context().guest().addSpend(context().spending(), context().poolMoney())
                             context().otherGuest().addSpend(context().otherSpend(), context().poolMoney())
 
-                           // assertThat(context().poolMoney().balanceOf(context().guest())).isEqualTo(-50)
                             assertThat(context().poolMoney().balanceOf(context().otherGuest())).isEqualTo(50)
                         }
                     }
