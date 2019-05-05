@@ -38,7 +38,7 @@ class Guest {
     }
 
     fun putDown(cost: Double): Movement{
-        var movement = Movement.crear(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
+        var movement = Movement(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
         movements.add(movement)
         return movement
     }
@@ -48,7 +48,7 @@ class Guest {
     }
 
     fun retirar(amount: Double): Movement{
-        var withdrawal = Movement.crear(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
+        var withdrawal = Movement(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
         movements.add(withdrawal)
         return withdrawal
     }
