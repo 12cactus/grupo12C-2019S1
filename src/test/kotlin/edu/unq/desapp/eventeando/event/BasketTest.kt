@@ -69,8 +69,8 @@ class BasketTest: JavaSpec<BasketContextTest>() {
             }
 
             describe("with unconfirmed guests"){
-                context().guest(Supplier { Guest.crear("guest") })
-                context().guests(Supplier { mutableListOf(context().guest(), Guest.crear("otro guest")) })
+                context().guest(Supplier { Guest("guest") })
+                context().guests(Supplier { mutableListOf(context().guest(), Guest("otro guest")) })
                 context().spendings(Supplier { mutableListOf<Spending>() })
 
                 describe("when send guests()"){

@@ -9,18 +9,9 @@ import java.time.LocalDate
 /**
  * Models a person that has events and movements
  */
-class Guest {
-    private var confirmedEvents: MutableList<Event> = mutableListOf()
-    private lateinit var name: String
-    private var movements: MutableList<Movement> = mutableListOf()
-
-    companion object {
-        fun crear(name: String): Guest{
-            val guest = Guest()
-            guest.name = name
-            return guest
-        }
-    }
+class Guest(val name: String,
+            val confirmedEvents: MutableList<Event> = mutableListOf(),
+            val movements: MutableList<Movement> = mutableListOf()) {
 
     fun attend(anEvent: Event): Boolean {
         return this.confirmedEvents.contains(anEvent)
@@ -38,7 +29,7 @@ class Guest {
     }
 
     fun putDown(cost: Double): Movement{
-        var movement = Movement(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
+        val movement = Movement(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
         movements.add(movement)
         return movement
     }
@@ -48,7 +39,7 @@ class Guest {
     }
 
     fun retirar(amount: Double): Movement{
-        var withdrawal = Movement(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
+        val withdrawal = Movement(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
         movements.add(withdrawal)
         return withdrawal
     }
@@ -56,8 +47,6 @@ class Guest {
     fun getBankWithdrawals():List<Movement>{
         return movements.filter { movement -> movement.type == MovementType.BANKWITHDRAWAL }
     }
-
-    fun getMovements(): MutableList<Movement> = movements
 
     fun getSummary(): Double {
         return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -

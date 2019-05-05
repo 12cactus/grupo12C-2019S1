@@ -18,7 +18,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
     override fun define()
     {
         describe("Dado un guest") {
-            context().guest(Supplier { Guest.crear("guest") })
+            context().guest(Supplier { Guest("guest") })
             context().event(canastaConInvitados())
 
             describe("que no confirmó asistencia al event"){
@@ -42,7 +42,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
 
     private fun canastaConInvitados(): Supplier<Event> {
         return Supplier {
-            Basket.crear(mutableListOf(), mutableListOf(context().guest(), Guest.crear("otro guest")), LocalDate.now().plusDays(1))
+            Basket.crear(mutableListOf(), mutableListOf(context().guest(), Guest("otro guest")), LocalDate.now().plusDays(1))
         }
     }
 }

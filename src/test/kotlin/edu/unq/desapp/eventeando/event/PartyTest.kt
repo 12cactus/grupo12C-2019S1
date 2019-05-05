@@ -34,7 +34,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                 }
 
                 describe("cuando se invita a un guest"){
-                    context().guest(Supplier { Guest.crear("guest") })
+                    context().guest(Supplier { Guest("guest") })
                     it("obtenemos la cantidad de guests el cost 1"){
                         context().party().invite(context().guest())
                         assertThat(context().party().guests().size).isEqualTo(1)
@@ -55,7 +55,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                     context().spending(Supplier { Spending.crear(100, "sarasa") })
 
                     describe("con guest sin confirmar") {
-                        context().guest(Supplier { Guest.crear("guest") })
+                        context().guest(Supplier { Guest("guest") })
                         context().guests(Supplier { mutableListOf(context().guest()) })
 
                         describe("cuando pedimos los spendings") {
@@ -83,7 +83,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
             context().party(Supplier { Party.crear(context().guests(), ayer) })
 
             describe("cuando el guest confirma asistencia pasada la fecha de confirmación") {
-                context().guest(Supplier { Guest.crear("guest") })
+                context().guest(Supplier { Guest("guest") })
                 context().guests(Supplier { mutableListOf(context().guest()) })
 
                 it("obtenemos el cost nulo de guests confirmados") {

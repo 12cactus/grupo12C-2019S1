@@ -8,7 +8,7 @@ import edu.unq.desapp.eventeando.guest.Guest
 class Spending() {
     private var cost: Int = 0
     private var description: String = ""
-    private var guest: Guest = Guest()
+    private var guest: Guest = Guest("aa")
 
     companion object {
         fun crear(cost: Int, descripcion: String): Spending {

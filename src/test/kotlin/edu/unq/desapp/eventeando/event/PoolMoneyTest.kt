@@ -24,8 +24,8 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
                 context().spending(Supplier { Spending.crear(100, "bebidas") })
 
                 describe("con 2 guests"){
-                    context().guest(Supplier { Guest.crear("Moncho") })
-                    context().otherGuest(Supplier { Guest.crear("Rodolfo") })
+                    context().guest(Supplier { Guest("Moncho") })
+                    context().otherGuest(Supplier { Guest("Rodolfo") })
                     describe("cuando pedimos el spending"){
                         it("obtenemos el cost 50"){
                             context().poolMoney().load( context().spending() )
@@ -41,8 +41,8 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
             }
             describe("sin spendings"){
                 describe("con 2 guests") {
-                    context().guest(Supplier { Guest.crear("Moncho") })
-                    context().otherGuest(Supplier { Guest.crear("Rodolfo") })
+                    context().guest(Supplier { Guest("Moncho") })
+                    context().otherGuest(Supplier { Guest("Rodolfo") })
 
                     describe("cada guest agrega un spending distinto"){
                         context().spending(Supplier { Spending.crear(100, "bebidas") })
