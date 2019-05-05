@@ -17,71 +17,71 @@ class BasketTest: JavaSpec<BasketContextTest>() {
 
     override fun define()
     {
-        describe("Dado un event basket") {
+        describe("given an basket event") {
             context().basket(Supplier { Basket.crear(context().spendings(), context().guests(), mañana) })
 
-            describe("sin spendings"){
+            describe("without spendings"){
                 context().spendings(Supplier { mutableListOf<Spending>() })
                 context().guests(Supplier { mutableListOf<Guest>() })
 
-                describe("cuando consultamos la lista de spendings"){
-                    it("obtenemos la lista vacia") {
+                describe("when send spends()"){
+                    it("is empty") {
                         assertThat(context().basket().spends()).isEmpty()
                     }
                 }
 
-                describe("cuando consultamos el totalCost de spendings"){
-                    it("obtenemos cost neutro") {
+                describe("when send totalCost()"){
+                    it("get neutral cost") {
                         assertThat(context().basket().totalCost()).isEqualTo(0)
                     }
                 }
             }
 
-            describe("con spendings"){
-                context().spendings(Supplier { gastos().toMutableList() })
+            describe("with spendings"){
+                context().spendings(Supplier { spends().toMutableList() })
                 context().guests(Supplier { mutableListOf<Guest>() })
 
-                describe("cuando consultamos la lista de spendings"){
-                    it("obtenemos una cantidad de spendings") {
+                describe("when send spends()"){
+                    it("get an amount of spends") {
                         assertThat(context().basket().spends().count()).isEqualTo(2)
                     }
                 }
 
-                describe("cuando consultamos el totalCost de spendings"){
-                    it("obtenemos la suma de cada spending") {
+                describe("when send totalCost()"){
+                    it("get the sum of costs") {
                         assertThat(context().basket().totalCost()).isEqualTo(10)
                     }
                 }
             }
 
-            describe("sin guests"){
+            describe("without guests"){
                 context().guests(Supplier { mutableListOf<Guest>() })
                 context().spendings(Supplier { mutableListOf<Spending>() })
 
-                describe("cuando consultamos la lista de guests"){
+                describe("when send guests()"){
                     it("obtenemos una nula de guests") {
                         assertThat(context().basket().guests().count()).isEqualTo(0)
                     }
                 }
             }
 
-            describe("con guests sin confirmar"){
+            describe("with unconfirmed guests"){
                 context().guest(Supplier { Guest.crear("guest") })
                 context().guests(Supplier { mutableListOf(context().guest(), Guest.crear("otro guest")) })
                 context().spendings(Supplier { mutableListOf<Spending>() })
 
-                describe("cuando consultamos la lista de guests"){
-                    it("obtenemos 2 guests") {
+                describe("when send guests()"){
+                    it("gets an amount of unconfirmed guests") {
                         assertThat(context().basket().guests().count()).isEqualTo(2)
                     }
                 }
 
-                it("obtenemos una lista vacia de guests confirmados") {
+                it("gets empty confirmed lists") {
                     assertThat(context().basket().confirmedGuests().count()).isEqualTo(0)
                 }
 
-                describe("cuando un guest confirma asistir al event basket"){
-                    it("obtenemos una lista con un guest") {
+                describe("when a guest confirm asistence to an event"){
+                    it("get an confirmed guests list with the guest") {
                         context().guest().attendTo(context().basket())
                         assertThat(context().basket().confirmedGuests().size).isEqualTo(1)
                     }
@@ -90,8 +90,8 @@ class BasketTest: JavaSpec<BasketContextTest>() {
         }
     }
 
-    private fun gastos(): List<Spending> {
-        val gastosDeCanasta = listOf(Spending.crear(5, "fafafa"), Spending.crear(5, "chicles"))
+    private fun spends(): List<Spending> {
+        val gastosDeCanasta = listOf(Spending.crear(5, "frites"), Spending.crear(5, "water"))
         return gastosDeCanasta
     }
 }
