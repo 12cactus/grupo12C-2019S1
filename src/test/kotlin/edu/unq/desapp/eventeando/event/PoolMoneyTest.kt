@@ -21,7 +21,7 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
             context().poolMoney( Supplier{ PoolMoney.crear(mutableListOf<Guest>(), mañana) })
 
             describe("con 100 de spendings"){
-                context().spending(Supplier { Spending.crear(100, "bebidas") })
+                context().spending(Supplier { Spending(100, "bebidas") })
 
                 describe("con 2 guests"){
                     context().guest(Supplier { Guest("Moncho") })
@@ -45,8 +45,8 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
                     context().otherGuest(Supplier { Guest("Rodolfo") })
 
                     describe("cada guest agrega un spending distinto"){
-                        context().spending(Supplier { Spending.crear(100, "bebidas") })
-                        context().otherSpend(Supplier { Spending.crear(200, "tutuca") })
+                        context().spending(Supplier { Spending(100, "bebidas") })
+                        context().otherSpend(Supplier { Spending(200, "tutuca") })
 
                         it("cuando pedimos los spendings obtenemos el cost 150"){
                             context().poolMoney().invite(context().guest())

@@ -25,7 +25,7 @@ class Party : Event() {
         if(confirmedGuests().size >0){
             mult = 1
         }
-        return spendings.fold(0) { total, gasto -> total + gasto.cost() } *mult
+        return spendings.fold(0) { total, gasto -> total + gasto.cost } *mult
     }
 
 }

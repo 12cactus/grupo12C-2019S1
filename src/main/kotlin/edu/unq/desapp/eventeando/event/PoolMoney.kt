@@ -32,6 +32,6 @@ class PoolMoney : Event() {
     }
 
     fun totalSpendsOf(guest: Guest): Int{
-        return spendsOf(guest).fold(0){ total, gasto -> total + gasto.cost()}
+        return spendsOf(guest).fold(0){ total, gasto -> total + gasto.cost}
     }
 }

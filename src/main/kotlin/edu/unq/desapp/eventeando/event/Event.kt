@@ -30,7 +30,7 @@ open class Event{
     }
 
     open fun totalCost(): Int{
-        return spendings.fold(0) { total, gasto -> total + gasto.cost() }
+        return spendings.fold(0) { total, gasto -> total + gasto.cost }
     }
 
     fun confirmedGuests(): List<Guest>{

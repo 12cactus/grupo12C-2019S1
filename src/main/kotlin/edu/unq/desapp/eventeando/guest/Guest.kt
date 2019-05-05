@@ -24,7 +24,7 @@ class Guest(val name: String,
     }
 
     fun addSpend(spending: Spending, event: Event){
-        spending.setGuest(this)
+        spending.guest = this
         event.load(spending)
     }
 

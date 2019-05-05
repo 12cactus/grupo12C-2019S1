@@ -94,7 +94,7 @@ class BasketTest: JavaSpec<BasketContextTest>() {
     }
 
     private fun spends(): List<Spending> {
-        val gastosDeCanasta = listOf(Spending.crear(5, "frites"), Spending.crear(5, "water"))
+        val gastosDeCanasta = listOf(Spending(5, "frites"), Spending(5, "water"))
         return gastosDeCanasta
     }
 }

@@ -52,7 +52,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                 }
 
                 describe("con un spending") {
-                    context().spending(Supplier { Spending.crear(100, "sarasa") })
+                    context().spending(Supplier { Spending(100, "sarasa") })
 
                     describe("con guest sin confirmar") {
                         context().guest(Supplier { Guest("guest") })
