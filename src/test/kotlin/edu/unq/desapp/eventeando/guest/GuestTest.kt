@@ -1,21 +1,21 @@
-package edu.unq.desapp.eventeando.invitado
+package edu.unq.desapp.eventeando.guest
 
 import ar.com.dgarcia.javaspec.api.JavaSpec
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner
-import edu.unq.desapp.eventeando.eventos.Canasta
-import edu.unq.desapp.eventeando.eventos.Evento
+import edu.unq.desapp.eventeando.event.Basket
+import edu.unq.desapp.eventeando.event.Event
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
 import java.time.LocalDate
 import java.util.function.Supplier
 
 @RunWith(JavaSpecRunner::class)
-class InvitadoTest: JavaSpec<InvitadoContextTest>() {
+class GuestTest: JavaSpec<GuestContextTest>() {
 
     override fun define()
     {
-        describe("Dado un invitado") {
-            context().invitado(Supplier { Invitado.crear("invitado") })
+        describe("Dado un guest") {
+            context().invitado(Supplier { Guest.crear("guest") })
             context().evento(canastaConInvitados())
 
             describe("que no confirmó asistencia al evento"){
@@ -37,9 +37,9 @@ class InvitadoTest: JavaSpec<InvitadoContextTest>() {
         }
     }
 
-    private fun canastaConInvitados(): Supplier<Evento> {
+    private fun canastaConInvitados(): Supplier<Event> {
         return Supplier {
-            Canasta.crear(mutableListOf(), mutableListOf(context().invitado(), Invitado.crear("otro invitado")), LocalDate.now().plusDays(1))
+            Basket.crear(mutableListOf(), mutableListOf(context().invitado(), Guest.crear("otro guest")), LocalDate.now().plusDays(1))
         }
     }
 }

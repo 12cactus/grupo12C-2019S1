@@ -1,8 +1,8 @@
-package edu.unq.desapp.eventeando.eventos
+package edu.unq.desapp.eventeando.event
 
 import ar.com.dgarcia.javaspec.api.JavaSpec
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner
-import edu.unq.desapp.eventeando.elemento.Elemento
+import edu.unq.desapp.eventeando.element.Element
 import edu.unq.desapp.eventeando.template.Template
 import org.junit.runner.RunWith
 import java.util.function.Supplier
@@ -18,8 +18,8 @@ class TemplateTest: JavaSpec<TemplateContextTest>() {
                     assertThat(context().template().descripcion()).isEqualTo("e'pa lo'pibe")
                 }
             describe("se le agregan dos elementos"){
-                context().elemento(Supplier { Elemento.crear("papas fritas",5.50) })
-                context().otroElemento(Supplier { Elemento.crear("mani pelado",7.00) })
+                context().elemento(Supplier { Element.crear("papas fritas",5.50) })
+                context().otroElemento(Supplier { Element.crear("mani pelado",7.00) })
 
                 it("se le pide el costo por persona el valor es 12.50"){
                     context().template().agregar(context().elemento())
