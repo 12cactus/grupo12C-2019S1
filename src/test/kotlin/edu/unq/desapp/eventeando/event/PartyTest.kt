@@ -60,7 +60,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                         context().guest(Supplier { Guest("guest") })
                         context().guests(Supplier { mutableListOf(context().guest()) })
 
-                        describe("cuando pedimos los spendings") {
+                        describe("when get the spendings") {
                             it("obtenemos cost neutro") {
                                 context().party().load(context().spending())
                                 assertThat(context().party().totalCost()).isEqualTo(0)
