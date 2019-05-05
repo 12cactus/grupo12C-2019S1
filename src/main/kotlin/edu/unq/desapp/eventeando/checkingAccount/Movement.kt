@@ -2,6 +2,9 @@ package edu.unq.desapp.eventeando.checkingAccount
 
 import java.time.LocalDate
 
+/**
+ * Represents a bank movement
+ */
 class Movement {
     private var date: LocalDate = LocalDate.now()
     private var cost: Double = 0.00

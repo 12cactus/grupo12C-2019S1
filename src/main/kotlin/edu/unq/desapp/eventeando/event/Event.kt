@@ -4,6 +4,10 @@ import edu.unq.desapp.eventeando.spending.Spending
 import edu.unq.desapp.eventeando.guest.Guest
 import java.time.LocalDate
 
+/**
+ * Models an abstract event thats have spendings, guests and confirmationDate.
+ * To review
+ */
 open class Event{
     var spendings: MutableList<Spending> = mutableListOf()
     var guests: MutableList<Guest> = mutableListOf()

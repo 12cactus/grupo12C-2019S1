@@ -3,6 +3,12 @@ package edu.unq.desapp.eventeando.event
 import edu.unq.desapp.eventeando.guest.Guest
 import java.time.LocalDate
 
+/**
+ * In this type of events the expenses of the same are not distributed but
+ * they are paid by the organizer. When creating the event, the organizer
+ * does not just enter a list of users to invite but also how long before
+ * they are allowed confirmations
+ */
 class Party : Event() {
 
     companion object {

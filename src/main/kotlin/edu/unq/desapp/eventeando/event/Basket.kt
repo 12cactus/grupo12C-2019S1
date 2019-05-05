@@ -4,6 +4,9 @@ import edu.unq.desapp.eventeando.spending.Spending
 import edu.unq.desapp.eventeando.guest.Guest
 import java.time.LocalDate
 
+/**
+ * Models a putlock
+ */
 class Basket : Event(){
 
     companion object {

@@ -6,6 +6,9 @@ import edu.unq.desapp.eventeando.event.Event
 import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 
+/**
+ * Models a person that has events and movements
+ */
 class Guest {
     private var confirmedEvents: MutableList<Event> = mutableListOf()
     private lateinit var name: String

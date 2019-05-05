@@ -4,19 +4,20 @@ import edu.unq.desapp.eventeando.spending.Spending
 import edu.unq.desapp.eventeando.guest.Guest
 import java.time.LocalDate
 
+/**
+ * Models a pool of money, thats have.....
+ */
 class PoolMoney : Event() {
 
 
     companion object {
-        fun crear(guests: MutableList<Guest>, date: LocalDate): PoolMoney {
+        fun crear(guests: MutableList<Guest>, dateAllowedUntilConfirmation: LocalDate): PoolMoney {
             val baquita = PoolMoney()
             baquita.guests = guests
-            baquita.confirmationDate = date
+            baquita.confirmationDate = dateAllowedUntilConfirmation
             return baquita
         }
     }
-
-
 
     fun costPerConfirmedGuest(): Int{
         return totalCost() / confirmedGuests().size
