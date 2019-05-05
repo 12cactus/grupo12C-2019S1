@@ -1,6 +1,5 @@
 package edu.unq.desapp.eventeando.event
 
-import edu.unq.desapp.eventeando.guest.Guest
 import java.time.LocalDate
 
 /**
@@ -9,23 +8,5 @@ import java.time.LocalDate
  * does not just enter a list of users to invite but also how long before
  * they are allowed confirmations
  */
-class Party : Event() {
-
-    companion object {
-        fun crear(guests: MutableList<Guest>, date: LocalDate): Party {
-            val party = Party()
-            party.guests = guests
-            party.confirmationDate = date
-            return party
-        }
-    }
-
-    override fun totalCost(): Int{
-        var mult = 0
-        if(confirmedGuests().size >0){
-            mult = 1
-        }
-        return spendings.fold(0) { total, gasto -> total + gasto.cost } *mult
-    }
-
-}
+class Party(val organizer: String, val confirmationAllowedDate: LocalDate, date: LocalDate) : Event(date)
+    //Por el momento el organizer es un String pero esto tiene que cambiar para que sea una persona o usuario del sist

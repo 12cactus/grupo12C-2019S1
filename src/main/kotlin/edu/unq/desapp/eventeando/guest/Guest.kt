@@ -9,16 +9,16 @@ import java.time.LocalDate
 /**
  * Models a person that has events and movements
  */
-class Guest(val name: String,
-            val confirmedEvents: MutableList<Event> = mutableListOf(),
-            val movements: MutableList<Movement> = mutableListOf()) {
+class Guest(val name: String) {
+    val confirmedEvents: MutableList<Event> = mutableListOf()
+    val movements: MutableList<Movement> = mutableListOf()
 
-    fun attend(anEvent: Event): Boolean {
+    fun isConfirmedFor(anEvent: Event): Boolean {
         return this.confirmedEvents.contains(anEvent)
     }
 
     fun attendTo(event: Event) {
-        if(LocalDate.now().isBefore(event.confirmationDate())){
+        if(LocalDate.now().isBefore(event.date)){
             confirmedEvents.add(event)
         }
     }

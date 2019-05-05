@@ -7,18 +7,7 @@ import java.time.LocalDate
 /**
  * Models a pool of money, thats have.....
  */
-class PoolMoney : Event() {
-
-
-    companion object {
-        fun crear(guests: MutableList<Guest>, dateAllowedUntilConfirmation: LocalDate): PoolMoney {
-            val baquita = PoolMoney()
-            baquita.guests = guests
-            baquita.confirmationDate = dateAllowedUntilConfirmation
-            return baquita
-        }
-    }
-
+class PoolMoney(date: LocalDate) : Event(date) {
     fun costPerConfirmedGuest(): Int{
         return totalCost() / confirmedGuests().size
     }
