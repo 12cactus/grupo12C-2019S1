@@ -18,13 +18,13 @@ import java.util.function.Supplier
 @RunWith(JavaSpecRunner::class)
 class PartyTest: JavaSpec<PartyContextTest>() {
 
-    val hoy = LocalDate.now()
-    val ayer = hoy.minusDays (7)
-    val mañana = hoy.plusDays(1)
+    val today = LocalDate.now()
+    val yesterday = today.minusDays (7)
+    val tomorrow = today.plusDays(1)
 
     override fun define() {
         describe("Dado un event party") {
-            context().party( Supplier { Party("organizador", hoy, mañana ) })
+            context().party( Supplier { Party("organizador", today, tomorrow ) })
 
             describe("sin guests"){
                 context().guests(Supplier { mutableListOf<Guest>() })
@@ -35,8 +35,8 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                     }
                 }
 
-                describe("cuando se invita a un guest"){
-                    context().guest(Supplier { Guest("guest") })
+                describe("cuando se invita aGuest"){
+                    context().guest(Supplier { Guest("aGuest") })
                     it("obtenemos la cantidad de guests el cost 1"){
                         context().party().invite(context().guest())
                         assertThat(context().party().guests.size).isEqualTo(1)
@@ -82,7 +82,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
         }
 
         describe("Dado un event party con fecha caduca de confirmación") {
-            context().party(Supplier { Party("organizador", ayer, hoy) })
+            context().party(Supplier { Party("organizador", yesterday, today) })
 
             describe("cuando el guest confirma asistencia pasada la fecha de confirmación") {
                 context().guest(Supplier { Guest("guest") })
