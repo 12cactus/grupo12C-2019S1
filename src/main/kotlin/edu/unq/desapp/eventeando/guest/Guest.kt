@@ -34,20 +34,32 @@ class Guest(val name: String) {
         return movement
     }
 
+    /**
+     * Gets bank deposits
+     */
     fun getBankDeposits(): List<Movement>{
         return movements.filter { movement -> movement.type == MovementType.BANKDEPOSIT }
     }
 
+    /**
+     * Withdrawal money
+     */
     fun retirar(amount: Double): Movement{
         val withdrawal = Movement(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
         movements.add(withdrawal)
         return withdrawal
     }
 
+    /**
+     * Gets movements of withdrawal type
+     */
     fun getBankWithdrawals():List<Movement>{
         return movements.filter { movement -> movement.type == MovementType.BANKWITHDRAWAL }
     }
 
+    /**
+     * Gets summary or resume of movements
+     */
     fun getSummary(): Double {
         return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -
                 getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
