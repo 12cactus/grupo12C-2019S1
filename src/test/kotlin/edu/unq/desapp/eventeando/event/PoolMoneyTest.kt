@@ -18,7 +18,7 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
     var mañana = hoy.plusDays(1)
     override fun define() {
         describe("dado un event PoolMoney"){
-            context().poolMoney( Supplier{ PoolMoney.crear(mutableListOf<Guest>(), mañana) })
+            context().poolMoney( Supplier{ PoolMoney(mañana) })
 
             describe("con 100 de spendings"){
                 context().spending(Supplier { Spending(100, "bebidas") })
@@ -67,7 +67,6 @@ class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
                             context().guest().addSpend(context().spending(), context().poolMoney())
                             context().otherGuest().addSpend(context().otherSpend(), context().poolMoney())
 
-                           // assertThat(context().poolMoney().balanceOf(context().guest())).isEqualTo(-50)
                             assertThat(context().poolMoney().balanceOf(context().otherGuest())).isEqualTo(50)
                         }
                     }
