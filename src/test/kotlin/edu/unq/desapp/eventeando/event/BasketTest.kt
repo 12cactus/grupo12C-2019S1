@@ -67,8 +67,8 @@ class BasketTest: JavaSpec<BasketContextTest>() {
             describe("with unconfirmed guests"){
                 context().spendings(Supplier { mutableListOf<Spending>() })
                 context().guest(Supplier { Guest("Carlos") })
-                context().basket().addGuest(context().guest())
-                context().basket().addGuest(Guest("jose"))
+                context().basket().invite(context().guest())
+                context().basket().invite(Guest("jose"))
 
                 describe("when send guests()"){
                     it("gets an amount of unconfirmed guests") {
@@ -92,7 +92,7 @@ class BasketTest: JavaSpec<BasketContextTest>() {
 
     fun addSpendsToBasket(){
         val spendsForBasket = listOf(Spending(5, "frites"), Spending(5, "water"))
-        spendsForBasket.forEach { spend -> context().basket().addSpend(spend) }
+        spendsForBasket.forEach { spend -> context().basket().load(spend) }
     }
 }
 

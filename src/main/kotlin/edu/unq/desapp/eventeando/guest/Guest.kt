@@ -13,21 +13,33 @@ class Guest(val name: String) {
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
+    /**
+     * Returns true if this attends to an event
+     */
     fun isConfirmedFor(anEvent: Event): Boolean {
         return this.confirmedEvents.contains(anEvent)
     }
 
+    /**
+     * Attends to an event, If the event has not happened yet
+     */
     fun attendTo(event: Event) {
         if(LocalDate.now().isBefore(event.date)){
             confirmedEvents.add(event)
         }
     }
 
+    /**
+     * Add spend to spendings of this, and load the spend to event
+     */
     fun addSpend(spending: Spending, event: Event){
         spending.guest = this
         event.load(spending)
     }
 
+    /**
+     *
+     */
     fun putDown(cost: Double): Movement{
         val movement = Movement(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
         movements.add(movement)

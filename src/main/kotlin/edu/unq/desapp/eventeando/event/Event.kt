@@ -12,27 +12,31 @@ abstract class Event(val date: LocalDate){
     val spendings: MutableList<Spending> = mutableListOf()
     val guests: MutableList<Guest> = mutableListOf()
 
+    /**
+     * Load spend to spendings list
+     */
     fun load(spending: Spending) {
         spendings.add(spending)
     }
 
+    /**
+     * Returns total costs for all spendings
+     */
     open fun totalCost(): Int{
         return spendings.fold(0) { total, spending -> total + spending.cost }
     }
 
+    /**
+     * Returns a list with the guests who confirmed attendance
+     */
     fun confirmedGuests(): List<Guest>{
         return guests.filter { guest -> guest.isConfirmedFor(this)  }
     }
 
-    fun invite(guest: Guest){
-        this.guests.add(guest)
-    }
-
-    fun addSpend(aSpend: Spending){
-        spendings.add(aSpend)
-    }
-
-    fun addGuest(unconfirmedGuest: Guest){
-        guests.add(unconfirmedGuest)
+    /**
+     * Add unconfirmed guest to guests list
+     */
+    fun invite(unconfirmedGuest: Guest){
+        this.guests.add(unconfirmedGuest)
     }
 }
