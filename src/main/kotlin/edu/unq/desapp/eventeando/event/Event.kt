@@ -7,38 +7,38 @@ import java.time.LocalDate
 open class Event{
     var spendings: MutableList<Spending> = mutableListOf()
     var guests: MutableList<Guest> = mutableListOf()
-    var fechaConfirmacion: LocalDate = LocalDate.now()
+    var confirmationDate: LocalDate = LocalDate.now()
 
-    open fun crear(fechaDeConfirmacion:LocalDate){
-        fechaConfirmacion = fechaDeConfirmacion
+    open fun crear(confirmationDate:LocalDate){
+        this.confirmationDate = confirmationDate
     }
 
-    fun gastos(): MutableList<Spending> {
+    fun spends(): MutableList<Spending> {
         return spendings
     }
 
-    fun cargar(spending: Spending) {
+    fun load(spending: Spending) {
         spendings.add(spending)
     }
 
-    fun invitados(): MutableList<Guest> {
+    fun guests(): MutableList<Guest> {
         return guests
     }
 
-    open fun valorTotal(): Int{
-        return spendings.fold(0) { total, gasto -> total + gasto.valor() }
+    open fun totalCost(): Int{
+        return spendings.fold(0) { total, gasto -> total + gasto.cost() }
     }
 
-    fun invitadosConfirmados(): List<Guest>{
-        return guests.filter { invitado -> invitado.asisteA(this)  }
+    fun confirmedGuests(): List<Guest>{
+        return guests.filter { guest -> guest.attend(this)  }
     }
 
-    fun getFechaLimite(): LocalDate{
-        return fechaConfirmacion
+    fun confirmationDate(): LocalDate{
+        return confirmationDate
     }
 
-    fun invitar(usuario: Guest){
-        this.guests.add(usuario)
+    fun invite(guest: Guest){
+        this.guests.add(guest)
     }
 
 }

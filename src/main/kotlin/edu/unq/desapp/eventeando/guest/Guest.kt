@@ -7,57 +7,57 @@ import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 
 class Guest {
-    private var eventosConfirmados: MutableList<Event> = mutableListOf()
-    private lateinit var nombre: String
+    private var confirmedEvents: MutableList<Event> = mutableListOf()
+    private lateinit var name: String
     private var movements: MutableList<Movement> = mutableListOf()
 
     companion object {
-        fun crear(nombre: String): Guest{
-            val invitado = Guest()
-            invitado.nombre = nombre
-            return invitado
+        fun crear(name: String): Guest{
+            val guest = Guest()
+            guest.name = name
+            return guest
         }
     }
 
-    fun asisteA(unEvent: Event): Boolean {
-        return this.eventosConfirmados.contains(unEvent)
+    fun attend(anEvent: Event): Boolean {
+        return this.confirmedEvents.contains(anEvent)
     }
 
-    fun asistirA(event: Event) {
-        if(LocalDate.now().isBefore(event.getFechaLimite())){
-            eventosConfirmados.add(event)
+    fun attendTo(event: Event) {
+        if(LocalDate.now().isBefore(event.confirmationDate())){
+            confirmedEvents.add(event)
         }
     }
 
-    fun agregarGasto(spending: Spending, event: Event){
-        spending.setInvitado(this)
-        event.cargar(spending)
+    fun addSpend(spending: Spending, event: Event){
+        spending.setGuest(this)
+        event.load(spending)
     }
 
-    fun depositar(monto: Double): Movement{
-        var movimiento = Movement.crear(LocalDate.now(), monto, MovementType.DEPOSITO)
-        movements.add(movimiento)
-        return movimiento
+    fun putDown(cost: Double): Movement{
+        var movement = Movement.crear(LocalDate.now(), cost, MovementType.BANKDEPOSIT)
+        movements.add(movement)
+        return movement
     }
 
-    fun getDepositos(): List<Movement>{
-        return movements.filter { movimiento -> movimiento.tipo() == MovementType.DEPOSITO }
+    fun getBankDeposits(): List<Movement>{
+        return movements.filter { movement -> movement.type() == MovementType.BANKDEPOSIT }
     }
 
-    fun retirar(monto: Double): Movement{
-        var retiro = Movement.crear(LocalDate.now(),monto,MovementType.RETIRO)
-        movements.add(retiro)
-        return retiro
+    fun retirar(amount: Double): Movement{
+        var withdrawal = Movement.crear(LocalDate.now(),amount,MovementType.BANKWITHDRAWAL)
+        movements.add(withdrawal)
+        return withdrawal
     }
 
-    fun getRetiros():List<Movement>{
-        return movements.filter { movimiento -> movimiento.tipo() == MovementType.RETIRO }
+    fun getBankWithdrawals():List<Movement>{
+        return movements.filter { movement -> movement.type() == MovementType.BANKWITHDRAWAL }
     }
 
-    fun getMovimientos(): MutableList<Movement> = movements
+    fun getMovements(): MutableList<Movement> = movements
 
-    fun getResumen(): Double {
-        return  getDepositos().fold(0.00) { total, movimiento -> total + movimiento.monto() } -
-                getRetiros().fold(0.00) { total, movimiento -> total + movimiento.monto() }
+    fun getSummary(): Double {
+        return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost() } -
+                getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost() }
     }
 }

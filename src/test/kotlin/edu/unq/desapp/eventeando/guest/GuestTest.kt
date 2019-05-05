@@ -15,22 +15,22 @@ class GuestTest: JavaSpec<GuestContextTest>() {
     override fun define()
     {
         describe("Dado un guest") {
-            context().invitado(Supplier { Guest.crear("guest") })
-            context().evento(canastaConInvitados())
+            context().guest(Supplier { Guest.crear("guest") })
+            context().event(canastaConInvitados())
 
-            describe("que no confirmó asistencia al evento"){
+            describe("que no confirmó asistencia al event"){
                 describe("cuando consultamos si asiste"){
                     it("obtenemos que no") {
-                        assertThat(context().invitado().asisteA(context().evento())).isFalse()
+                        assertThat(context().guest().attend(context().event())).isFalse()
                     }
                 }
             }
 
-            describe("que confirma asistencia al evento"){
+            describe("que confirma asistencia al event"){
                 describe("cuando consultamos si asiste"){
                     it("obtenemos que si") {
-                        context().invitado().asistirA(context().evento())
-                        assertThat(context().invitado().asisteA(context().evento())).isTrue()
+                        context().guest().attendTo(context().event())
+                        assertThat(context().guest().attend(context().event())).isTrue()
                     }
                 }
             }
@@ -39,7 +39,7 @@ class GuestTest: JavaSpec<GuestContextTest>() {
 
     private fun canastaConInvitados(): Supplier<Event> {
         return Supplier {
-            Basket.crear(mutableListOf(), mutableListOf(context().invitado(), Guest.crear("otro guest")), LocalDate.now().plusDays(1))
+            Basket.crear(mutableListOf(), mutableListOf(context().guest(), Guest.crear("otro guest")), LocalDate.now().plusDays(1))
         }
     }
 }

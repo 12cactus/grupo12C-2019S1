@@ -17,73 +17,73 @@ class BasketTest: JavaSpec<BasketContextTest>() {
 
     override fun define()
     {
-        describe("Dado un evento canasta") {
-            context().canasta(Supplier { Basket.crear(context().gastos(), context().invitados(), mañana) })
+        describe("Dado un event basket") {
+            context().basket(Supplier { Basket.crear(context().spendings(), context().guests(), mañana) })
 
             describe("sin spendings"){
-                context().gastos(Supplier { mutableListOf<Spending>() })
-                context().invitados(Supplier { mutableListOf<Guest>() })
+                context().spendings(Supplier { mutableListOf<Spending>() })
+                context().guests(Supplier { mutableListOf<Guest>() })
 
                 describe("cuando consultamos la lista de spendings"){
                     it("obtenemos la lista vacia") {
-                        assertThat(context().canasta().gastos()).isEmpty()
+                        assertThat(context().basket().spends()).isEmpty()
                     }
                 }
 
-                describe("cuando consultamos el total de spendings"){
-                    it("obtenemos valor neutro") {
-                        assertThat(context().canasta().valorTotal()).isEqualTo(0)
+                describe("cuando consultamos el totalCost de spendings"){
+                    it("obtenemos cost neutro") {
+                        assertThat(context().basket().totalCost()).isEqualTo(0)
                     }
                 }
             }
 
             describe("con spendings"){
-                context().gastos(Supplier { gastos().toMutableList() })
-                context().invitados(Supplier { mutableListOf<Guest>() })
+                context().spendings(Supplier { gastos().toMutableList() })
+                context().guests(Supplier { mutableListOf<Guest>() })
 
                 describe("cuando consultamos la lista de spendings"){
                     it("obtenemos una cantidad de spendings") {
-                        assertThat(context().canasta().gastos().count()).isEqualTo(2)
+                        assertThat(context().basket().spends().count()).isEqualTo(2)
                     }
                 }
 
-                describe("cuando consultamos el total de spendings"){
+                describe("cuando consultamos el totalCost de spendings"){
                     it("obtenemos la suma de cada spending") {
-                        assertThat(context().canasta().valorTotal()).isEqualTo(10)
+                        assertThat(context().basket().totalCost()).isEqualTo(10)
                     }
                 }
             }
 
             describe("sin guests"){
-                context().invitados(Supplier { mutableListOf<Guest>() })
-                context().gastos(Supplier { mutableListOf<Spending>() })
+                context().guests(Supplier { mutableListOf<Guest>() })
+                context().spendings(Supplier { mutableListOf<Spending>() })
 
                 describe("cuando consultamos la lista de guests"){
                     it("obtenemos una nula de guests") {
-                        assertThat(context().canasta().invitados().count()).isEqualTo(0)
+                        assertThat(context().basket().guests().count()).isEqualTo(0)
                     }
                 }
             }
 
             describe("con guests sin confirmar"){
-                context().invitado(Supplier { Guest.crear("guest") })
-                context().invitados(Supplier { mutableListOf(context().invitado(), Guest.crear("otro guest")) })
-                context().gastos(Supplier { mutableListOf<Spending>() })
+                context().guest(Supplier { Guest.crear("guest") })
+                context().guests(Supplier { mutableListOf(context().guest(), Guest.crear("otro guest")) })
+                context().spendings(Supplier { mutableListOf<Spending>() })
 
                 describe("cuando consultamos la lista de guests"){
                     it("obtenemos 2 guests") {
-                        assertThat(context().canasta().invitados().count()).isEqualTo(2)
+                        assertThat(context().basket().guests().count()).isEqualTo(2)
                     }
                 }
 
                 it("obtenemos una lista vacia de guests confirmados") {
-                    assertThat(context().canasta().invitadosConfirmados().count()).isEqualTo(0)
+                    assertThat(context().basket().confirmedGuests().count()).isEqualTo(0)
                 }
 
-                describe("cuando un guest confirma asistir al evento canasta"){
+                describe("cuando un guest confirma asistir al event basket"){
                     it("obtenemos una lista con un guest") {
-                        context().invitado().asistirA(context().canasta())
-                        assertThat(context().canasta().invitadosConfirmados().size).isEqualTo(1)
+                        context().guest().attendTo(context().basket())
+                        assertThat(context().basket().confirmedGuests().size).isEqualTo(1)
                     }
                 }
             }

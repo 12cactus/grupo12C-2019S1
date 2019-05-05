@@ -5,9 +5,9 @@ import edu.unq.desapp.eventeando.event.Event
 import java.util.function.Supplier
 
 interface GuestContextTest : TestContext{
-    fun invitado(): Guest
-    fun invitado(supplier: Supplier<Guest>)
+    fun guest(): Guest
+    fun guest(supplier: Supplier<Guest>)
 
-    fun evento(): Event
-    fun evento(supplier: Supplier<Event>)
+    fun event(): Event
+    fun event(supplier: Supplier<Event>)
 }

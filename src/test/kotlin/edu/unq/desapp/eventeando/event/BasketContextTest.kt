@@ -6,15 +6,15 @@ import edu.unq.desapp.eventeando.guest.Guest
 import java.util.function.Supplier
 
 interface BasketContextTest : TestContext{
-    fun canasta(): Basket
-    fun canasta(supplier: Supplier<Basket>)
+    fun basket(): Basket
+    fun basket(supplier: Supplier<Basket>)
 
-    fun gastos(): MutableList<Spending>
-    fun gastos(supplier: Supplier<MutableList<Spending>>)
+    fun spendings(): MutableList<Spending>
+    fun spendings(supplier: Supplier<MutableList<Spending>>)
 
-    fun invitados(): MutableList<Guest>
-    fun invitados(supplier: Supplier<MutableList<Guest>>)
+    fun guests(): MutableList<Guest>
+    fun guests(supplier: Supplier<MutableList<Guest>>)
 
-    fun invitado(): Guest
-    fun invitado(supplier: Supplier<Guest>)
+    fun guest(): Guest
+    fun guest(supplier: Supplier<Guest>)
 }

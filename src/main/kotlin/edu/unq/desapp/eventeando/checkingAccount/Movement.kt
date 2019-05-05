@@ -3,28 +3,28 @@ package edu.unq.desapp.eventeando.checkingAccount
 import java.time.LocalDate
 
 class Movement {
-    private var fecha: LocalDate = LocalDate.now()
-    private var monto: Double = 0.00
-    private var tipo: MovementType = MovementType.DEPOSITO
+    private var date: LocalDate = LocalDate.now()
+    private var cost: Double = 0.00
+    private var type: MovementType = MovementType.BANKDEPOSIT
 
     companion object {
-        fun crear(fecha:LocalDate, monto: Double, tipo: MovementType ): Movement {
-            val movimiento = Movement()
-            movimiento.monto = monto
-            movimiento.fecha = fecha
-            movimiento.tipo = tipo
-            return movimiento
+        fun crear(date:LocalDate, cost: Double, type: MovementType ): Movement {
+            val movement = Movement()
+            movement.cost = cost
+            movement.date = date
+            movement.type = type
+            return movement
         }
     }
 
-    fun monto():Double = monto
+    fun cost():Double = cost
     /*{
-        var valor = monto
-        if(tipo == MovementType.RETIRO){
-            valor = valor * -1
+        var cost = cost
+        if(type == MovementType.BANKWITHDRAWAL){
+            cost = cost * -1
         }
-        return valor
+        return cost
     } */
 
-    fun tipo():MovementType = tipo
+    fun type():MovementType = type
 }

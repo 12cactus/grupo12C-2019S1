@@ -19,56 +19,56 @@ class PartyTest: JavaSpec<PartyContextTest>() {
     var mañana = hoy.plusDays(1)
 
     override fun define() {
-        describe("Dado un evento fiesta") {
-            context().fiesta( Supplier { Party.crear( context().invitados(), mañana ) })
+        describe("Dado un event party") {
+            context().party( Supplier { Party.crear( context().guests(), mañana ) })
 
             describe("sin guests"){
-                context().invitados(Supplier { mutableListOf<Guest>() })
+                context().guests(Supplier { mutableListOf<Guest>() })
                 
                 describe("cuando pedimos los spendings") {
-                    it("obtenemos valor neutro") {
-                        assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                    it("obtenemos cost neutro") {
+                        assertThat(context().party().totalCost()).isEqualTo(0)
                     }
                 }
 
                 describe("cuando se invita a un guest"){
-                    context().invitado(Supplier { Guest.crear("guest") })
-                    it("obtenemos la cantidad de guests el valor 1"){
-                        context().fiesta().invitar(context().invitado())
-                        assertThat(context().fiesta().invitados().size).isEqualTo(1)
+                    context().guest(Supplier { Guest.crear("guest") })
+                    it("obtenemos la cantidad de guests el cost 1"){
+                        context().party().invite(context().guest())
+                        assertThat(context().party().guests().size).isEqualTo(1)
                     }
                 }
 
                 describe("sin spendings"){
-                    context().gastos(Supplier { mutableListOf<Spending>() })
+                    context().spendings(Supplier { mutableListOf<Spending>() })
 
                     describe("cuando pedimos spendings"){
-                        it("obtenemos el valor neutro"){
-                            assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                        it("obtenemos el cost neutro"){
+                            assertThat(context().party().totalCost()).isEqualTo(0)
                         }
                     }
                 }
 
                 describe("con un spending") {
-                    context().gasto(Supplier { Spending.crear(100, "sarasa") })
+                    context().spending(Supplier { Spending.crear(100, "sarasa") })
 
                     describe("con guest sin confirmar") {
-                        context().invitado(Supplier { Guest.crear("guest") })
-                        context().invitados(Supplier { mutableListOf(context().invitado()) })
+                        context().guest(Supplier { Guest.crear("guest") })
+                        context().guests(Supplier { mutableListOf(context().guest()) })
 
                         describe("cuando pedimos los spendings") {
-                            it("obtenemos valor neutro") {
-                                context().fiesta().cargar(context().gasto())
-                                assertThat(context().fiesta().valorTotal()).isEqualTo(0)
+                            it("obtenemos cost neutro") {
+                                context().party().load(context().spending())
+                                assertThat(context().party().totalCost()).isEqualTo(0)
                             }
                         }
 
-                        describe("cuando el guest confirma asistencia a la fiesta") {
+                        describe("cuando el guest confirma asistencia a la party") {
                             describe("cuando pedimos los spendings") {
-                                it("obtenemos el valor 100") {
-                                    context().invitado().asistirA(context().fiesta())
-                                    context().fiesta().cargar(context().gasto())
-                                    assertThat(context().fiesta().valorTotal()).isEqualTo(100)
+                                it("obtenemos el cost 100") {
+                                    context().guest().attendTo(context().party())
+                                    context().party().load(context().spending())
+                                    assertThat(context().party().totalCost()).isEqualTo(100)
                                 }
                             }
                         }
@@ -77,16 +77,16 @@ class PartyTest: JavaSpec<PartyContextTest>() {
             }
         }
 
-        describe("Dado un evento fiesta con fecha caduca de confirmación") {
-            context().fiesta(Supplier { Party.crear(context().invitados(), ayer) })
+        describe("Dado un event party con fecha caduca de confirmación") {
+            context().party(Supplier { Party.crear(context().guests(), ayer) })
 
             describe("cuando el guest confirma asistencia pasada la fecha de confirmación") {
-                context().invitado(Supplier { Guest.crear("guest") })
-                context().invitados(Supplier { mutableListOf(context().invitado()) })
+                context().guest(Supplier { Guest.crear("guest") })
+                context().guests(Supplier { mutableListOf(context().guest()) })
 
-                it("obtenemos el valor nulo de guests confirmados") {
-                    context().invitado().asistirA(context().fiesta())
-                    assertThat(context().fiesta().invitadosConfirmados().size).isEqualTo(0)
+                it("obtenemos el cost nulo de guests confirmados") {
+                    context().guest().attendTo(context().party())
+                    assertThat(context().party().confirmedGuests().size).isEqualTo(0)
                 }
             }
         }

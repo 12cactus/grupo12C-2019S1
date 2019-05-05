@@ -3,26 +3,26 @@ package edu.unq.desapp.eventeando.template
 import edu.unq.desapp.eventeando.element.Element
 
 class Template {
-    private var descripcion: String = ""
-    private var titulo: String = ""
-    private var elements:  MutableList<Element> = mutableListOf<Element>()
+    private var description: String = ""
+    private var title: String = ""
+    private var elements:  MutableList<Element> = mutableListOf()
 
     companion object {
-        fun crear(titulo:String, descripcion: String): Template {
+        fun crear(title:String, description: String): Template {
             val template = Template()
-            template.titulo = descripcion
-            template.descripcion = descripcion
+            template.title = title
+            template.description = description
             return template
         }
     }
 
-    fun agregar(element: Element){
+    fun add(element: Element){
         elements.add(element)
     }
 
-    fun costoPorPersona():Double{
-        return elements.fold(0.00){ total, elemento -> elemento.proporcionPorPersona() + total}
+    fun costPerPerson():Double{
+        return elements.fold(0.00){ total, element -> element.proportionPerPerson() + total}
     }
 
-    fun descripcion(): String = descripcion
+    fun description(): String = description
 }

@@ -7,19 +7,19 @@ import java.util.function.Supplier
 
 interface PoolMoneyContextTest: TestContext {
 
-    fun baquita(): PoolMoney
-    fun baquita(supplier: Supplier<PoolMoney>)
+    fun poolMoney(): PoolMoney
+    fun poolMoney(supplier: Supplier<PoolMoney>)
 
-    fun invitado(): Guest
-    fun invitado(supplier: Supplier<Guest>)
+    fun guest(): Guest
+    fun guest(supplier: Supplier<Guest>)
 
-    fun otroInvitado(): Guest
-    fun otroInvitado(supplier: Supplier<Guest>)
+    fun otherGuest(): Guest
+    fun otherGuest(supplier: Supplier<Guest>)
 
-    fun gasto(): Spending
-    fun gasto(supplier: Supplier<Spending>)
+    fun spending(): Spending
+    fun spending(supplier: Supplier<Spending>)
 
-    fun otroGasto(): Spending
-    fun otroGasto(supplier: Supplier<Spending>)
+    fun otherSpend(): Spending
+    fun otherSpend(supplier: Supplier<Spending>)
 
 }

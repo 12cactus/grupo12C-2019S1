@@ -7,12 +7,12 @@ import java.time.LocalDate
 class Basket : Event(){
 
     companion object {
-        fun crear(spendings: MutableList<Spending>, guests: MutableList<Guest>, confirmacion: LocalDate): Basket {
-            val canasta = Basket()
-            canasta.spendings = spendings
-            canasta.guests = guests
-            canasta.fechaConfirmacion = confirmacion
-            return canasta
+        fun crear(spendings: MutableList<Spending>, guests: MutableList<Guest>, dateConfirmation: LocalDate): Basket {
+            val basket = Basket()
+            basket.spendings = spendings
+            basket.guests = guests
+            basket.confirmationDate = dateConfirmation
+            return basket
         }
     }
 }

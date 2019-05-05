@@ -8,16 +8,16 @@ import java.util.function.Supplier
 
 interface MovementContextTest: TestContext {
 
-    fun deposito(): Movement
-    fun deposito(supplier: Supplier<Movement>)
+    fun bankDeposit(): Movement
+    fun bankDeposit(supplier: Supplier<Movement>)
 
-    fun retiro(): Movement
-    fun retiro(supplier: Supplier<Movement>)
+    fun bankWithdrawal(): Movement
+    fun bankWithdrawal(supplier: Supplier<Movement>)
 
-    fun invitado(): Guest
-    fun invitado(supplier: Supplier<Guest>)
+    fun guest(): Guest
+    fun guest(supplier: Supplier<Guest>)
 
-    fun canastaCon1Confirmado(): Basket
-    fun canastaCon1Confirmado(supplier: Supplier<Basket>)
+    fun basketWithAConfirmedGuest(): Basket
+    fun basketWithAConfirmedGuest(supplier: Supplier<Basket>)
 
 }

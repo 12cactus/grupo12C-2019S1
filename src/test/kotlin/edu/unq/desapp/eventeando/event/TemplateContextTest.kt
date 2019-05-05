@@ -10,10 +10,10 @@ interface TemplateContextTest: TestContext {
     fun template(): Template
     fun template(supplier: Supplier<Template>)
 
-    fun elemento(): Element
-    fun elemento(supplier: Supplier<Element>)
+    fun element(): Element
+    fun element(supplier: Supplier<Element>)
 
-    fun otroElemento(): Element
-    fun otroElemento(supplier: Supplier<Element>)
+    fun otherElement(): Element
+    fun otherElement(supplier: Supplier<Element>)
 
 }

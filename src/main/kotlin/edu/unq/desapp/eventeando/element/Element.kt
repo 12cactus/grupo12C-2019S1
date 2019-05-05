@@ -1,24 +1,19 @@
 package edu.unq.desapp.eventeando.element
 
 class Element {
-    var descripcion: String = ""
-    var proporcionPorPersona: Double = 0.00
+    var description: String = ""
+    var proportionPerPerson: Double = 0.00
 
     companion object {
-        fun crear(descripcion:String, proporcion: Double ): Element {
-            val elemento = Element()
-            elemento.descripcion=descripcion
-            elemento.proporcionPorPersona=proporcion
-            return elemento
+        fun crear(description:String, proportionPerPerson: Double ): Element {
+            val element = Element()
+            element.description=description
+            element.proportionPerPerson=proportionPerPerson
+            return element
         }
     }
 
-    public fun proporcionPorPersona():Double{
-        return proporcionPorPersona
+    fun proportionPerPerson():Double{
+        return proportionPerPerson
     }
-
-    public fun descripcion():String{
-        return descripcion
-    }
-
 }

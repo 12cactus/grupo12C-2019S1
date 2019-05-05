@@ -3,27 +3,27 @@ package edu.unq.desapp.eventeando.spending
 import edu.unq.desapp.eventeando.guest.Guest
 
 class Spending() {
-    private var valor: Int = 0
-    private var descripcion: String = ""
+    private var cost: Int = 0
+    private var description: String = ""
     private var guest: Guest = Guest()
 
     companion object {
-        fun crear(unValor: Int, descripcion: String): Spending {
-            val gasto = Spending()
-            gasto.valor = unValor
-            gasto.descripcion = descripcion
-            return gasto
+        fun crear(cost: Int, descripcion: String): Spending {
+            val spending = Spending()
+            spending.cost = cost
+            spending.description = descripcion
+            return spending
         }
     }
 
-    fun valor(): Int = this.valor
-    fun invitado(): Guest = this.guest
+    fun cost(): Int = this.cost
+    fun guest(): Guest = this.guest
 
-    fun setInvitado(guest: Guest){
+    fun setGuest(guest: Guest){
         this.guest = guest
     }
 
-    fun generadoPor(guest: Guest): Boolean{
+    fun isFrom(guest: Guest): Boolean{
         return this.guest == guest
     }
 }

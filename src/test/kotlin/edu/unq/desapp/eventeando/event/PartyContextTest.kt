@@ -7,19 +7,19 @@ import java.util.function.Supplier
 
 
 interface PartyContextTest : TestContext{
-    fun fiesta(): Party
-    fun fiesta(supplier: Supplier<Party>)
+    fun party(): Party
+    fun party(supplier: Supplier<Party>)
 
-    fun invitados(): MutableList<Guest>
-    fun invitados(supplier: Supplier<MutableList<Guest>>)
+    fun guests(): MutableList<Guest>
+    fun guests(supplier: Supplier<MutableList<Guest>>)
 
-    fun invitado(): Guest
-    fun invitado(supplier: Supplier<Guest>)
+    fun guest(): Guest
+    fun guest(supplier: Supplier<Guest>)
 
-    fun gastos(): MutableList<Spending>
-    fun gastos(supplier: Supplier<MutableList<Spending>>)
+    fun spendings(): MutableList<Spending>
+    fun spendings(supplier: Supplier<MutableList<Spending>>)
 
-    fun gasto(): Spending
-    fun gasto(supplier: Supplier<Spending>)
+    fun spending(): Spending
+    fun spending(supplier: Supplier<Spending>)
 
 }
