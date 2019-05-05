@@ -9,6 +9,9 @@ import org.junit.runner.RunWith
 import java.time.LocalDate
 import java.util.function.Supplier
 
+/**
+ * Tests a guest
+ */
 @RunWith(JavaSpecRunner::class)
 class GuestTest: JavaSpec<GuestContextTest>() {
 

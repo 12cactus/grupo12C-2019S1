@@ -8,6 +8,9 @@ import org.junit.runner.RunWith
 import java.util.function.Supplier
 import org.assertj.core.api.Assertions.assertThat
 
+/**
+ * Test a template of event
+ */
 @RunWith(JavaSpecRunner::class)
 class TemplateTest: JavaSpec<TemplateContextTest>() {
     override fun define() {

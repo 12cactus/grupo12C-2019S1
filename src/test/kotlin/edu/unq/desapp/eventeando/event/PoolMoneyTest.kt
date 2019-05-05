@@ -8,7 +8,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
 import java.util.function.Supplier
 
-
+/**
+ * Test a pool money event
+ */
 @RunWith(JavaSpecRunner::class)
 class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
     var hoy = LocalDate.now()

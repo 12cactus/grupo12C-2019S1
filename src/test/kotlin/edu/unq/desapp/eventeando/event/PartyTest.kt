@@ -10,7 +10,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
 import java.util.function.Supplier
 
-
+/**
+ * Test a party event
+ */
 @RunWith(JavaSpecRunner::class)
 class PartyTest: JavaSpec<PartyContextTest>() {
 

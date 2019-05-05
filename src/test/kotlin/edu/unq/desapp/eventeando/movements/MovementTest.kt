@@ -7,6 +7,9 @@ import org.junit.runner.RunWith
 import org.assertj.core.api.Assertions.assertThat
 import java.util.function.Supplier
 
+/**
+ * Tests a movement
+ */
 @RunWith(JavaSpecRunner::class)
 class MovementTest: JavaSpec<MovementContextTest>() {
     override fun define(){

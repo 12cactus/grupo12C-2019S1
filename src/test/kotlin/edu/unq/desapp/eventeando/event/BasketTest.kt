@@ -9,6 +9,9 @@ import org.junit.runner.RunWith
 import java.time.LocalDate
 import java.util.function.Supplier
 
+/**
+ * Test a basket event
+ */
 @RunWith(JavaSpecRunner::class)
 class BasketTest: JavaSpec<BasketContextTest>() {
     var hoy = LocalDate.now()
