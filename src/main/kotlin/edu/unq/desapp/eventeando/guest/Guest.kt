@@ -44,7 +44,7 @@ class Guest {
     }
 
     fun getBankDeposits(): List<Movement>{
-        return movements.filter { movement -> movement.type() == MovementType.BANKDEPOSIT }
+        return movements.filter { movement -> movement.type == MovementType.BANKDEPOSIT }
     }
 
     fun retirar(amount: Double): Movement{
@@ -54,13 +54,13 @@ class Guest {
     }
 
     fun getBankWithdrawals():List<Movement>{
-        return movements.filter { movement -> movement.type() == MovementType.BANKWITHDRAWAL }
+        return movements.filter { movement -> movement.type == MovementType.BANKWITHDRAWAL }
     }
 
     fun getMovements(): MutableList<Movement> = movements
 
     fun getSummary(): Double {
-        return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost() } -
-                getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost() }
+        return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -
+                getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
     }
 }

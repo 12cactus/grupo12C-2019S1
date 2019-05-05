@@ -20,7 +20,7 @@ class MovementTest: JavaSpec<MovementContextTest>() {
                 it("El guest tiene un Movement del type BANKDEPOSIT de 100 en su cuenta"){
                     context().guest().putDown(100.00)
                     assertThat(context().guest().getBankDeposits().size).isEqualTo(1)
-                    assertThat(context().guest().getBankDeposits().last().cost()).isEqualTo(100.00)
+                    assertThat(context().guest().getBankDeposits().last().cost).isEqualTo(100.00)
                 }
 
             }
@@ -28,7 +28,7 @@ class MovementTest: JavaSpec<MovementContextTest>() {
                 it("El guest tiene un Movement del type BANKWITHDRAWAL de 100 en su cuenta"){
                     context().guest().retirar(100.00)
                     assertThat(context().guest().getBankWithdrawals().size).isEqualTo(1)
-                    assertThat(context().guest().getBankWithdrawals().last().cost()).isEqualTo(100.00)
+                    assertThat(context().guest().getBankWithdrawals().last().cost).isEqualTo(100.00)
                 }
             }
 
