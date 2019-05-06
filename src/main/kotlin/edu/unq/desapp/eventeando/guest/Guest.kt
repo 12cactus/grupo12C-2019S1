@@ -3,6 +3,7 @@ package edu.unq.desapp.eventeando.guest
 import edu.unq.desapp.eventeando.checkingAccount.Movement
 import edu.unq.desapp.eventeando.checkingAccount.MovementType
 import edu.unq.desapp.eventeando.event.Event
+import edu.unq.desapp.eventeando.event.Party
 import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 
@@ -10,6 +11,8 @@ import java.time.LocalDate
  * Models a person that has events and movements
  */
 class Guest(val name: String) {
+    val events: MutableList<Party> = mutableListOf()
+    val confirmedParties: MutableList<Party> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -75,5 +78,18 @@ class Guest(val name: String) {
     fun getSummary(): Double {
         return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -
                 getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
+    }
+
+    fun invitationFrom(event: Party) {
+        events.add(event)
+    }
+
+    fun confirmAssistanceTo(party: Party) {
+        events.remove(party)
+        confirmedParties.add(party)
+    }
+
+    fun isConfirmedTo(anEvent: Party): Boolean {
+        return confirmedParties.contains(anEvent)
     }
 }
