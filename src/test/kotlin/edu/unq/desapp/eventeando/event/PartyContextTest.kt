@@ -3,7 +3,7 @@ package edu.unq.desapp.eventeando.event
 import ar.com.dgarcia.javaspec.api.contexts.TestContext
 import edu.unq.desapp.eventeando.element.Product
 import edu.unq.desapp.eventeando.spending.Spending
-import edu.unq.desapp.eventeando.guest.Guest
+import edu.unq.desapp.eventeando.guest.User
 import java.time.LocalDate
 import java.util.function.Supplier
 
@@ -18,14 +18,11 @@ interface PartyContextTest : TestContext{
     fun partyDate(): LocalDate
     fun partyDate(supplier: Supplier<LocalDate>)
 
-    fun organizer(): String
-    fun organizer(supplier: Supplier<String>)
+    fun organizer(): User
+    fun organizer(supplier: Supplier<User>)
 
-    fun guests(): MutableList<Guest>
-    fun guests(supplier: Supplier<MutableList<Guest>>)
-
-    fun products(): MutableList<Product>
-    fun products(supplier: Supplier<MutableList<Product>>)
+    fun users(): MutableList<User>
+    fun users(supplier: Supplier<MutableList<User>>)
 
     fun product(): Product
     fun product(supplier: Supplier<Product>)
@@ -33,11 +30,11 @@ interface PartyContextTest : TestContext{
     fun otherProduct(): Product
     fun otherProduct(supplier: Supplier<Product>)
 
-    fun guest(): Guest
-    fun guest(supplier: Supplier<Guest>)
+    fun guest(): User
+    fun guest(supplier: Supplier<User>)
 
-    fun otherGuest(): Guest
-    fun otherGuest(supplier: Supplier<Guest>)
+    fun otherGuest(): User
+    fun otherGuest(supplier: Supplier<User>)
 
     fun spendings(): MutableList<Spending>
     fun spendings(supplier: Supplier<MutableList<Spending>>)
@@ -45,6 +42,7 @@ interface PartyContextTest : TestContext{
     fun spending(): Spending
     fun spending(supplier: Supplier<Spending>)
 
-
+    fun otherSpending(): Spending
+    fun otherSpending(supplier: Supplier<Spending>)
 
 }

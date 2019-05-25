@@ -5,7 +5,8 @@ import ar.com.dgarcia.javaspec.api.JavaSpec
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner
 import edu.unq.desapp.eventeando.element.Presentation
 import edu.unq.desapp.eventeando.element.Product
-import edu.unq.desapp.eventeando.guest.Guest
+import edu.unq.desapp.eventeando.guest.User
+import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.runner.RunWith
@@ -24,60 +25,70 @@ class PartyTest: JavaSpec<PartyContextTest>() {
     override fun define() {
         describe("Given a party") {
             beforeEach {
-                context().party( Supplier {
+                context().party(Supplier {
                     Party(context().organizer(),
-                        context().limitDateToConfirm(),
-                        context().partyDate(),
-                        context().guests(),
-                        context().products())
-                    })
-                context().organizer(Supplier { "an organizer" })
-                context().limitDateToConfirm(Supplier {today})
-                context().partyDate(Supplier {nextWeek})
-                context().products(Supplier {mutableListOf<Product>()})
+                            context().limitDateToConfirm(),
+                            context().partyDate(),
+                            context().users(),
+                            context().spendings())
+                })
+                context().organizer(Supplier { User("an organizer") })
+                context().limitDateToConfirm(Supplier { today })
+                context().partyDate(Supplier { nextWeek })
+                context().spendings(Supplier { mutableListOf<Spending>() })
+                context().users(Supplier { mutableListOf<User>() })
             }
 
-            describe("when invite some guests"){
+            describe("when invite some guests") {
                 beforeEach {
-                    context().guest(Supplier { Guest("guest") })
-                    context().otherGuest(Supplier { Guest("otherGuest") })
-                    context().guests(Supplier {mutableListOf(context().guest(), context().otherGuest())})
+                    context().guest(Supplier { User("invitado1") })
+                    context().otherGuest(Supplier { User("invitado2") })
+                    context().users(Supplier { mutableListOf(context().guest(), context().otherGuest()) })
                 }
 
-                it("Returns the exact number of guests"){
-                    assertThat(context().party().guests.size).isEqualTo(2)
+                it("Returns the exact number of guests") {
+                    assertThat(context().party().numberOfGuests()).isEqualTo(2)
                 }
 
-                describe("and add some products"){
-                    beforeEach {
-                        context().product(Supplier { Product("Cocacola", 90.50, Presentation("2.5L")) })
-                        context().otherProduct(Supplier { Product("Pan", 50.0, Presentation("1kg")) })
-                        context().products(Supplier {mutableListOf(context().product(), context().otherProduct())})
-                    }
-
-                    it("Returns the exact number of products"){
-                        assertThat(context().party().products.size).isEqualTo(2)
-                    }
-                }
-
-                describe("and a guest confirm assistance"){
-                    it("Returns the exact number of guests"){
+                describe("and a guest confirm assistance") {
+                    it("Returns the exact number of guests") {
                         context().guest().confirmAssistanceTo(context().party())
 
-                        assertThat(context().party().confirmedGuests().size).isEqualTo(1)
+                        assertThat(context().party().numberOfConfirmedGuests()).isEqualTo(1)
                     }
                 }
             }
 
-            describe("when the party has no guests"){
-                context().guests(Supplier { mutableListOf<Guest>() })
-                context().products(Supplier {mutableListOf<Product>()})
+            describe("when the party has no guests") {
+                context().users(Supplier { mutableListOf<User>() })
+                context().spendings(Supplier { mutableListOf<Spending>() })
 
                 describe("when requires total cost of party") {
                     it("returns zero") {
                         assertThat(context().party().totalCost()).isEqualTo(0.0)
                     }
                 }
+            }
+
+            describe("when add some amount needed for guest") {
+                beforeEach {
+                    context().product(Supplier { Product("Cocacola", Presentation("2.5L")) })
+                    context().otherProduct(Supplier { Product("Pan", Presentation("1kg")) })
+                    context().spending(Supplier { Spending(12.12, context().product()) })
+                    context().otherSpending(Supplier { Spending(12.12, context().otherProduct()) })
+                    context().spendings(Supplier { mutableListOf(context().spending(), context().otherSpending()) })
+                }
+
+                it("Returns the exact number of spendings") {
+                    assertThat(context().party().numberOfSSpendings()).isEqualTo(2)
+                }
+
+                it("Returns spending total") {
+                    assertThat(context().party().totalCost()).isEqualTo(24.24)
+                }
+            }
+
+        }
 
 
 
@@ -94,9 +105,9 @@ class PartyTest: JavaSpec<PartyContextTest>() {
 //                describe("con un spending") {
 //                    context().spending(Supplier { Spending(100, "sarasa") })
 //
-//                    describe("con guest sin confirmar") {
-//                        context().guest(Supplier { Guest("guest") })
-//                        context().guests(Supplier { mutableListOf(context().guest()) })
+//                    describe("con user sin confirmar") {
+//                        context().user(Supplier { User("user") })
+//                        context().guests(Supplier { mutableListOf(context().user()) })
 //
 //                        describe("cuando pedimos los spendings") {
 //                            it("obtenemos cost neutro") {
@@ -105,10 +116,10 @@ class PartyTest: JavaSpec<PartyContextTest>() {
 //                            }
 //                        }
 //
-//                        describe("cuando el guest confirma asistencia a la party") {
+//                        describe("cuando el user confirma asistencia a la party") {
 //                            describe("cuando pedimos los spendings") {
 //                                it("obtenemos el cost 100") {
-//                                    context().guest().attendTo(context().party())
+//                                    context().user().attendTo(context().party())
 //                                    context().party().load(context().spending())
 //                                    assertThat(context().party().totalCost()).isEqualTo(100)
 //                                }
@@ -116,20 +127,20 @@ class PartyTest: JavaSpec<PartyContextTest>() {
 //                        }
 //                    }
 //                }
-            }
 
 
-        }
+
+
 
 //        describe("Dado un event party con fecha caduca de confirmación") {
 //            context().party(Supplier { Party("organizador", weekAgo, today) })
 //
-//            describe("cuando el guest confirma asistencia pasada la fecha de confirmación") {
-//                context().guest(Supplier { Guest("guest") })
-//                context().guests(Supplier { mutableListOf(context().guest()) })
+//            describe("cuando el user confirma asistencia pasada la fecha de confirmación") {
+//                context().user(Supplier { User("user") })
+//                context().guests(Supplier { mutableListOf(context().user()) })
 //
 //                it("obtenemos el cost nulo de guests confirmados") {
-//                    context().guest().attendTo(context().party())
+//                    context().user().attendTo(context().party())
 //                    assertThat(context().party().confirmedGuests().size).isEqualTo(0)
 //                }
 //            }

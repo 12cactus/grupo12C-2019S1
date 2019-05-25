@@ -1,6 +1,6 @@
 package edu.unq.desapp.eventeando.element
 
-class Product(val name: String, val cost: Double, val presentation: Presentation)
+class Product(val name: String, val presentation: Presentation)
 
 class Presentation(val weight: String)
 //Por ahora el peso sólo, esto debe evolucionar para tener una forma de que

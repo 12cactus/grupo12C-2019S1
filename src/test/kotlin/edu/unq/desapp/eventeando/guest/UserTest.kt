@@ -10,15 +10,15 @@ import java.time.LocalDate
 import java.util.function.Supplier
 
 /**
- * Tests a guest
+ * Tests a user
  */
 @RunWith(JavaSpecRunner::class)
-class GuestTest: JavaSpec<GuestContextTest>() {
+class UserTest: JavaSpec<GuestContextTest>() {
 
     override fun define()
     {
-        describe("Dado un guest") {
-            context().guest(Supplier { Guest("guest") })
+        describe("Dado un user") {
+            context().guest(Supplier { User("user") })
             context().event(canastaConInvitados())
 
             describe("que no confirmó asistencia al event"){

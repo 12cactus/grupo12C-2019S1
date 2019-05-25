@@ -10,7 +10,7 @@ import java.time.LocalDate
 /**
  * Models a person that has events and movements
  */
-class Guest(val name: String) {
+class User(val name: String) {
     val events: MutableList<Party> = mutableListOf()
     val confirmedParties: MutableList<Party> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
@@ -36,7 +36,7 @@ class Guest(val name: String) {
      * Add spend to spendings of this, and load the spend to event
      */
     fun addSpend(spending: Spending, event: Event){
-        spending.guest = this
+        spending.user = this
         event.load(spending)
     }
 

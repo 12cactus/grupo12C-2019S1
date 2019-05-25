@@ -1,7 +1,7 @@
 package edu.unq.desapp.eventeando.event
 
 import edu.unq.desapp.eventeando.spending.Spending
-import edu.unq.desapp.eventeando.guest.Guest
+import edu.unq.desapp.eventeando.guest.User
 import java.time.LocalDate
 
 /**
@@ -10,7 +10,7 @@ import java.time.LocalDate
  */
 abstract class Event(val date: LocalDate){
     val spendings: MutableList<Spending> = mutableListOf()
-    val guests: MutableList<Guest> = mutableListOf()
+    val users: MutableList<User> = mutableListOf()
 
     /**
      * Load spend to spendings list
@@ -22,21 +22,21 @@ abstract class Event(val date: LocalDate){
     /**
      * Returns total costs for all spendings
      */
-    open fun totalCost(): Int{
-        return spendings.fold(0) { total, spending -> total + spending.cost }
+    open fun totalCost(): Double{
+        return spendings.fold(0.0) { total, spending -> total + spending.cost }
     }
 
     /**
      * Returns a list with the guests who confirmed attendance
      */
-    fun confirmedGuests(): List<Guest>{
-        return guests.filter { guest -> guest.isConfirmedFor(this)  }
+    fun confirmedGuests(): List<User>{
+        return users.filter { guest -> guest.isConfirmedFor(this)  }
     }
 
     /**
-     * Add unconfirmed guest to guests list
+     * Add unconfirmed user to guests list
      */
-    fun invite(unconfirmedGuest: Guest){
-        this.guests.add(unconfirmedGuest)
+    fun invite(unconfirmedUser: User){
+        this.users.add(unconfirmedUser)
     }
 }
