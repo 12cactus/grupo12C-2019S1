@@ -7,12 +7,14 @@ import edu.unq.desapp.eventeando.spending.Spending
 import edu.unq.desapp.eventeando.guest.User
 import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Ignore
 import org.junit.runner.RunWith
 import java.util.function.Supplier
 
 /**
  * Test a pool money event
  */
+@Ignore
 @RunWith(JavaSpecRunner::class)
 class PoolMoneyTest: JavaSpec<PoolMoneyContextTest>() {
     var hoy = LocalDate.now()
