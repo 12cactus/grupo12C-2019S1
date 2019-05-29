@@ -5,4 +5,4 @@ import java.time.LocalDate
 /**
  * Models a putlock
  */
-class Basket(date: LocalDate) : Event(date)
+class Basket(date: LocalDate)

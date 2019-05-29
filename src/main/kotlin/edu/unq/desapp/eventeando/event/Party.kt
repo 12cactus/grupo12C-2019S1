@@ -1,7 +1,7 @@
 package edu.unq.desapp.eventeando.event
 
+import edu.unq.desapp.eventeando.element.Commodity
 import edu.unq.desapp.eventeando.guest.User
-import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 
 /**
@@ -11,23 +11,21 @@ import java.time.LocalDate
  * they are allowed confirmations
  */
 class Party(val organizer: User,
+            date: LocalDate,
             val confirmationAllowedDate: LocalDate,
-            val date: LocalDate,
-            val guests: MutableList<User> = mutableListOf(),
-            val shoppingList: MutableList<Spending> = mutableListOf(),
-            val amountsNeeded: MutableList<AmountNeeded> = mutableListOf()) {
+            val shoppingList: MutableList<Commodity> = mutableListOf()): Event(date) {
 
     fun totalCost(): Double {
-        return shoppingList.fold(0.0) { total, spending -> total + spending.cost }
+        return shoppingList
+                .fold(0.00)
+                { total, commoodity ->
+                    total + commoodity.totalFromNeededPerPerson(numberOfConfirmedGuests())
+                }
     }
 
-    fun invite(user: User){
+    override fun  invite(user: User){
         this.guests.add(user)
         user.invitationFrom(this)
-    }
-
-    fun confirmedGuests(): List<User>{
-        return guests.filter { guest -> guest.isConfirmedTo(this)  }
     }
 
     fun numberOfGuests(): Int {
@@ -38,10 +36,9 @@ class Party(val organizer: User,
        return confirmedGuests().size
     }
 
-    fun numberOfSSpendings(): Int {
-        return shoppingList.size
+    fun addCommodity(commodity: Commodity) {
+        shoppingList.add(commodity)
     }
-
 
 }
 //Por el momento el organizer es un String pero esto tiene que cambiar para que sea una persona o usuario del sist

@@ -4,7 +4,6 @@ import edu.unq.desapp.eventeando.checkingAccount.Movement
 import edu.unq.desapp.eventeando.checkingAccount.MovementType
 import edu.unq.desapp.eventeando.event.Event
 import edu.unq.desapp.eventeando.event.Party
-import edu.unq.desapp.eventeando.spending.Spending
 import java.time.LocalDate
 
 /**
@@ -12,7 +11,6 @@ import java.time.LocalDate
  */
 class User(val name: String) {
     val events: MutableList<Party> = mutableListOf()
-    val confirmedParties: MutableList<Party> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -21,23 +19,6 @@ class User(val name: String) {
      */
     fun isConfirmedFor(anEvent: Event): Boolean {
         return this.confirmedEvents.contains(anEvent)
-    }
-
-    /**
-     * Attends to an event, If the event has not happened yet
-     */
-    fun attendTo(event: Event) {
-        if(LocalDate.now().isBefore(event.date)){
-            confirmedEvents.add(event)
-        }
-    }
-
-    /**
-     * Add spend to spendings of this, and load the spend to event
-     */
-    fun addSpend(spending: Spending, event: Event){
-        spending.user = this
-        event.load(spending)
     }
 
     /**
@@ -84,12 +65,15 @@ class User(val name: String) {
         events.add(event)
     }
 
-    fun confirmAssistanceTo(party: Party) {
-        events.remove(party)
-        confirmedParties.add(party)
-    }
-
-    fun isConfirmedTo(anEvent: Party): Boolean {
-        return confirmedParties.contains(anEvent)
+    /**
+     * Attends to an event, If the event has not happened yet or throw exception custom..
+     */
+    @Throws(IllegalArgumentException::class)
+    fun confirmAssistanceTo(event: Event) {
+        val now = LocalDate.now()
+        if(now.isBefore(event.date)){
+            events.remove(event)
+            confirmedEvents.add(event)
+        }
     }
 }
