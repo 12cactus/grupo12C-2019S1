@@ -25,12 +25,42 @@ class PartyTest: JavaSpec<PartyContextTest>() {
 
     override fun define() {
         describe("Given a party") {
-            xxx()
+            context().party(Supplier {
+                Party(context().organizer(),
+                        context().limitDateToConfirm(),
+                        context().partyDate())
+            })
+            context().organizer(Supplier { User("an organizer") })
+            context().limitDateToConfirm(Supplier { nextWeek })
+            context().partyDate(Supplier { nextWeek })
+
+            describe("whith a comodity") {
+                context().commodity(Supplier { Commodity(context().product(), 1.0) })
+                context().product(Supplier { Product("Cocacola", Presentation(2.5, PesentationPack.LITRE), 85.00) })
+
+                beforeEach {
+                    context().commodity()
+                    context().party().addCommodity(context().commodity())
+                }
+                it("Returns spending total zero") {
+                    assertThat(context().party().totalCost()).isEqualTo(0.0)
+                }
+
+                describe("with a guest confirmed the invitation") {
+                    it("Returns spending total 85") {
+                        context().guest(Supplier { User("moncho") })
+                        context().party().invite(context().guest())
+                        context().guest().confirmAssistanceTo(context().party())
+                        assertThat(context().party().totalCost()).isEqualTo(85.0)
+                    }
+                }
+            }
 
             describe("when invite some guests") {
+                context().guest(Supplier { User("invitado1") })
+                context().otherGuest(Supplier { User("invitado2") })
+
                 beforeEach {
-                    context().guest(Supplier { User("invitado1") })
-                    context().otherGuest(Supplier { User("invitado2") })
                     context().party().invite(context().guest())
                     context().party().invite(context().otherGuest())
                 }
@@ -58,29 +88,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                 }
             }
 
-            describe("whith a comodity") {
-                xxx()
-                context().product(Supplier { Product("Cocacola", Presentation(2.5, PesentationPack.LITRE), 85.00) })
-                context().commodity(Supplier { Commodity(context().product(), 1.0) })
-                context().party().addCommodity(context().commodity())
-                it("Returns spending total zero") {
-                    assertThat(context().party().totalCost()).isEqualTo(0.0)
-                }
-                describe("with a guest confirmed the invitation") {
-                    it("Returns spending total 85") {
-                        xxx()
-                        context().product(Supplier { Product("Cocacola", Presentation(2.5, PesentationPack.LITRE), 85.00) })
-                        context().commodity(Supplier { Commodity(context().product(), 1.0) })
-                        context().party().addCommodity(context().commodity())
-                        context().guest(Supplier { User("moncho") })
-                        context().party().invite(context().guest())
-                        context().guest().confirmAssistanceTo(context().party())
-                        assertThat(context().party().totalCost()).isEqualTo(85.0)
-                    }
-                }
-            }
-
-            describe("with two commodities") {
+            xdescribe("with two commodities") {
                 it("Returns spending total 85") {
                     xxx()
                     context().product(Supplier { Product("Cocacola", Presentation(2.5, PesentationPack.LITRE), 85.00) })
@@ -98,7 +106,7 @@ class PartyTest: JavaSpec<PartyContextTest>() {
 
             describe("with two commodities and two confirmed Guest") {
                 it("Returns spending total 85") {
-                    xxx()
+
                     context().product(Supplier { Product("Cocacola", Presentation(2.5, PesentationPack.LITRE), 85.00) })
                     context().otherProduct(Supplier { Product("Pan", Presentation(0.5, PesentationPack.KILO), 50.00) })
                     context().commodity(Supplier { Commodity(context().product(), 1.0) })
@@ -115,78 +123,46 @@ class PartyTest: JavaSpec<PartyContextTest>() {
                 }
             }
 
-            describe("given an event party with expired confirmation date") {
-                context().organizer(Supplier { User("an organizer") })
-                context().limitDateToConfirm(Supplier { weekAgo })
-                context().partyDate(Supplier { nextWeek })
-                context().party(Supplier {
-                    Party(context().organizer(),
-                            context().limitDateToConfirm(),
-                            context().partyDate())
-                })
-
-                describe("when guest confirm ") {
-                    context().organizer(Supplier { User("an organizer") })
-                    context().limitDateToConfirm(Supplier { weekAgo })
-                    context().partyDate(Supplier { nextWeek })
-
-                    context().party(Supplier {
-                        Party(context().organizer(),
-                                context().limitDateToConfirm(),
-                                context().partyDate())
-                    })
-                    context().guest(Supplier { User("moncho") })
-                    context().party().invite(context().guest())
-                    context().otherGuest(Supplier { User("Dante") })
-                    context().party().invite(context().otherGuest())
-
-                    context().guest().confirmAssistanceTo(context().party())
-
-                    it("cnnnot confirm assistance") {
-                        assertThat(context().party().confirmedGuests().size).isEqualTo(0)
-                    }
-                }
-            }
+//            describe("given an event party with expired confirmation date") {
+//                context().organizer(Supplier { User("an organizer") })
+//                context().limitDateToConfirm(Supplier { weekAgo })
+//                context().partyDate(Supplier { nextWeek })
+//                context().party(Supplier {
+//                    Party(context().organizer(),
+//                            context().limitDateToConfirm(),
+//                            context().partyDate())
+//                })
+//
+//                describe("when guest confirm ") {
+//                    context().organizer(Supplier { User("an organizer") })
+//                    context().limitDateToConfirm(Supplier { weekAgo })
+//                    context().partyDate(Supplier { nextWeek })
+//
+//                    context().party(Supplier {
+//                        Party(context().organizer(),
+//                                context().limitDateToConfirm(),
+//                                context().partyDate())
+//                    })
+//                    context().guest(Supplier { User("moncho") })
+//                    context().party().invite(context().guest())
+//                    context().otherGuest(Supplier { User("Dante") })
+//                    context().party().invite(context().otherGuest())
+//
+//                    context().guest().confirmAssistanceTo(context().party())
+//
+//                    it("cnnnot confirm assistance") {
+//                        assertThat(context().party().confirmedGuests().size).isEqualTo(0)
+//                    }
+//                }
+//            }
 
         }
 
-//                describe("con un spending") {
-//                    context().spending(Supplier { Spending(100, "sarasa") })
-//
-//                    describe("con user sin confirmar") {
-//                        context().user(Supplier { User("user") })
-//                        context().guests(Supplier { mutableListOf(context().user()) })
-//
-//                        describe("cuando pedimos los spendings") {
-//                            it("obtenemos cost neutro") {
-//                                context().party().load(context().spending())
-//                                assertThat(context().party().totalCost()).isEqualTo(0)
-//                            }
-//                        }
-//
-//                        describe("cuando el user confirma asistencia a la party") {
-//                            describe("cuando pedimos los spendings") {
-//                                it("obtenemos el cost 100") {
-//                                    context().user().attendTo(context().party())
-//                                    context().party().load(context().spending())
-//                                    assertThat(context().party().totalCost()).isEqualTo(100)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
 
 
     }
 
     private fun xxx() {
-        context().party(Supplier {
-            Party(context().organizer(),
-                    context().limitDateToConfirm(),
-                    context().partyDate())
-        })
-        context().organizer(Supplier { User("an organizer") })
-        context().limitDateToConfirm(Supplier { nextWeek })
-        context().partyDate(Supplier { nextWeek })
+
     }
 }
