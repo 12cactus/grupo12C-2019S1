@@ -12,10 +12,14 @@ import java.time.LocalDate
  */
 class Party(val organizer: User,
             date: LocalDate,
-            val confirmationAllowedDate: LocalDate,
-            val shoppingList: MutableList<Commodity> = mutableListOf()): Event(date) {
+            confirmationAllowedDate: LocalDate,
+            private val shoppingList: MutableList<Commodity> = mutableListOf()) :
+        Event(date, confirmationAllowedDate) {
 
-    fun totalCost(): Double {
+    /**
+     *
+     */
+    override fun totalCost(): Double {
         return shoppingList
                 .fold(0.00)
                 { total, commoodity ->
@@ -23,22 +27,18 @@ class Party(val organizer: User,
                 }
     }
 
-    override fun  invite(user: User){
+    /**
+     *
+     */
+    override fun invite(user: User) {
         this.guests.add(user)
         user.invitationFrom(this)
     }
 
-    fun numberOfGuests(): Int {
-        return guests.size
-    }
-
-    fun numberOfConfirmedGuests(): Int {
-       return confirmedGuests().size
-    }
-
+    /**
+     *
+     */
     fun addCommodity(commodity: Commodity) {
         shoppingList.add(commodity)
     }
-
 }
-//Por el momento el organizer es un String pero esto tiene que cambiar para que sea una persona o usuario del sist

@@ -67,15 +67,17 @@ class User(val name: String) {
     }
 
     /**
-     * Attends to an event, If the event has not happened yet or throw exception custom..
+     * Confirm if the event has not happened yet or throw exception custom..
      */
     fun confirmAssistanceTo(event: Event) {
-        val now = LocalDate.now()
-        if(now.isBefore(event.date)){
-            unconfirmedEvents.remove(event)
-            confirmedEvents.add(event)
-        }else{
-            throw CannotConfirmAssitanceException("The confirmation date expired")
-        }
+        event.confirmAssistance(this)
+    }
+
+    /**
+     * Attend an event that involves, remove it from unconfirmed events, and add it to confirmed events.
+     */
+    fun attendTo(event: Event) {
+        unconfirmedEvents.remove(event)
+        confirmedEvents.add(event)
     }
 }

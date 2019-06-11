@@ -28,8 +28,8 @@ class PartyTest : JavaSpec<PartyContextTest>() {
         describe("Given a party") {
             context().party(Supplier {
                 Party(context().organizer(),
-                        context().limitDateToConfirm(),
-                        context().partyDate())
+                        context().partyDate(),
+                        context().limitDateToConfirm())
             })
             context().organizer(Supplier { User("an organizer") })
             context().limitDateToConfirm(Supplier { nextWeek })
@@ -120,7 +120,7 @@ class PartyTest : JavaSpec<PartyContextTest>() {
 
             describe("With expired confirmation date") {
                 context().limitDateToConfirm(Supplier { weekAgo })
-                context().partyDate(Supplier { today })
+                context().partyDate(Supplier { nextWeek })
 
                 describe("when guest want confirm assistance") {
                     context().guest(Supplier { User("moncho") })
