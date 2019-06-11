@@ -13,11 +13,11 @@ import java.time.LocalDate
 class Party(val organizer: User,
             date: LocalDate,
             confirmationAllowedDate: LocalDate,
-            private val shoppingList: MutableList<Commodity> = mutableListOf()) :
-        Event(date, confirmationAllowedDate) {
+            shoppingList: MutableList<Commodity> = mutableListOf()) :
+        Event(date, confirmationAllowedDate, shoppingList) {
 
     /**
-     *
+     * TODO
      */
     override fun totalCost(): Double {
         return shoppingList
@@ -25,20 +25,5 @@ class Party(val organizer: User,
                 { total, commoodity ->
                     total + commoodity.totalFromNeededPerPerson(numberOfConfirmedGuests())
                 }
-    }
-
-    /**
-     *
-     */
-    override fun invite(user: User) {
-        this.guests.add(user)
-        user.invitationFrom(this)
-    }
-
-    /**
-     *
-     */
-    fun addCommodity(commodity: Commodity) {
-        shoppingList.add(commodity)
     }
 }

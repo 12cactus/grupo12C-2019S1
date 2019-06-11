@@ -1,5 +1,6 @@
 package edu.unq.desapp.eventeando.event
 
+import edu.unq.desapp.eventeando.element.Commodity
 import edu.unq.desapp.eventeando.guest.User
 import edu.unq.desapp.eventeando.guest.exception.CannotConfirmAssitanceException
 import java.time.LocalDate
@@ -8,7 +9,7 @@ import java.time.LocalDate
  * Models an abstract event thats have spendings, guests and confirmationDate.
  * To review
  */
-abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate){
+abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate, val shoppingList: MutableList<Commodity>){
     val guests: MutableList<User> = mutableListOf()
 
     /**
@@ -19,9 +20,12 @@ abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate
     }
 
     /**
-     * Each subclass responsability.
+     * TODO
      */
-    abstract fun invite(unconfirmedUser: User)
+    fun invite(user: User) {
+        this.guests.add(user)
+        user.invitationFrom(this)
+    }
 
     /**
      * Each subclass responsability. Returns total cost of the event
@@ -29,7 +33,7 @@ abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate
     abstract fun totalCost() : Double
 
     /**
-     *
+     * TODO
      */
     fun confirmAssistance(guest: User){
         val today = LocalDate.now()
@@ -48,16 +52,23 @@ abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate
             today.isBefore(confirmationAllowedDate) || today.isEqual(confirmationAllowedDate)
 
     /**
-     *
+     * TODO
      */
     fun numberOfGuests(): Int {
         return guests.size
     }
 
     /**
-     *
+     * TODO
      */
     fun numberOfConfirmedGuests(): Int {
         return confirmedGuests().size
+    }
+
+    /**
+     * TODO
+     */
+    fun addCommodity(commodity: Commodity) {
+        shoppingList.add(commodity)
     }
 }

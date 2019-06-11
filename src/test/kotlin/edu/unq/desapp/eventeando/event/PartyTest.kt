@@ -20,9 +20,9 @@ import java.util.function.Supplier
 @RunWith(JavaSpecRunner::class)
 class PartyTest : JavaSpec<PartyContextTest>() {
 
-    val today = LocalDate.now()
-    val weekAgo = today.minusDays(7)
-    val nextWeek = today.plusDays(7)
+    private val today = LocalDate.now()
+    private val weekAgo = today.minusDays(7)
+    private val nextWeek = today.plusDays(7)
 
     override fun define() {
         describe("Given a party") {
@@ -34,6 +34,14 @@ class PartyTest : JavaSpec<PartyContextTest>() {
             context().organizer(Supplier { User("an organizer") })
             context().limitDateToConfirm(Supplier { nextWeek })
             context().partyDate(Supplier { nextWeek })
+
+            describe("when the party has no guests") {
+                describe("when requires total cost of party") {
+                    it("returns zero") {
+                        assertThat(context().party().totalCost()).isEqualTo(0.0)
+                    }
+                }
+            }
 
             describe("when invite some guests") {
                 context().guest(Supplier { User("invitado1") })
@@ -52,16 +60,6 @@ class PartyTest : JavaSpec<PartyContextTest>() {
                     beforeEach { context().guest().confirmAssistanceTo(context().party()) }
                     it("Returns the exact number of confirmed guests") {
                         assertThat(context().party().numberOfConfirmedGuests()).isEqualTo(1)
-                    }
-                }
-            }
-
-            describe("when the party has no guests") {
-                context().users(Supplier { mutableListOf<User>() })
-
-                describe("when requires total cost of party") {
-                    it("returns zero") {
-                        assertThat(context().party().totalCost()).isEqualTo(0.0)
                     }
                 }
             }

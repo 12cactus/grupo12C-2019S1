@@ -21,9 +21,6 @@ interface PartyContextTest : TestContext{
     fun organizer(): User
     fun organizer(supplier: Supplier<User>)
 
-    fun users(): MutableList<User>
-    fun users(supplier: Supplier<MutableList<User>>)
-
     fun product(): Product
     fun product(supplier: Supplier<Product>)
 
