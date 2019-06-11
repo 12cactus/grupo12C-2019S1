@@ -4,13 +4,14 @@ import edu.unq.desapp.eventeando.checkingAccount.Movement
 import edu.unq.desapp.eventeando.checkingAccount.MovementType
 import edu.unq.desapp.eventeando.event.Event
 import edu.unq.desapp.eventeando.event.Party
+import edu.unq.desapp.eventeando.guest.exception.CannotConfirmAssitanceException
 import java.time.LocalDate
 
 /**
  * Models a person that has events and movements
  */
 class User(val name: String) {
-    val events: MutableList<Party> = mutableListOf()
+    val unconfirmedEvents: MutableList<Party> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -62,18 +63,19 @@ class User(val name: String) {
     }
 
     fun invitationFrom(event: Party) {
-        events.add(event)
+        unconfirmedEvents.add(event)
     }
 
     /**
      * Attends to an event, If the event has not happened yet or throw exception custom..
      */
-    @Throws(IllegalArgumentException::class)
     fun confirmAssistanceTo(event: Event) {
         val now = LocalDate.now()
         if(now.isBefore(event.date)){
-            events.remove(event)
+            unconfirmedEvents.remove(event)
             confirmedEvents.add(event)
+        }else{
+            throw CannotConfirmAssitanceException("The confirmation date expired")
         }
     }
 }
