@@ -1,0 +1,80 @@
+swagger: '2.0'
+
+info:
+  description: Eventeando service for clients
+  version: 1.0.0
+  title: Eventeando APP
+  contact:
+    email: marcos.alvarenga@10pines.com
+
+tags:
+  - name: create-events
+    description: Events creation
+
+paths:
+
+  /event:
+    post:
+      tags:
+        - create-events
+      security:
+        - Oauth2: [Application]
+      summary: Creates the event with the given information.
+      operationId: createEvents
+      description: |
+        This endpoint creates the event with the data given. Send emails and configure events
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: creationEventInfo
+          schema:
+            $ref: '#/definitions/CreationEventInfo'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: returns created event
+          schema:
+            $ref: '#/definitions/Event'
+
+definitions:
+
+  CreationEventInfo:
+    description: Information needed to create an event
+    properties:
+      eventType:
+        type: string
+        description: a type of representation expected event creation
+        enum:
+          - 'party'
+          - 'poolMoney'
+          - 'basket'
+        example: 'party'
+      guests:
+        type: array
+        description: an array of user guests id
+        items:
+          $ref: '#/definitions/User'
+
+  Event:
+    description: Information needed to create an event
+    properties:
+      id:
+        type: string
+        description: Id for identifies the new event
+      totalCost:
+        type: number
+        description: the total cost of event
+    example:
+      id: unIdEvento
+      version: 125.45
+
+  User:
+    description: Represents the user with the id
+    properties:
+      id:
+        type: string
+        description: User id
+    example:
+      id: unIdUser

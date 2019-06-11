@@ -11,7 +11,7 @@ import java.time.LocalDate
  * Models a person that has events and movements
  */
 class User(val name: String) {
-    val unconfirmedEvents: MutableList<Party> = mutableListOf()
+    val unconfirmedEvents: MutableList<Event> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -62,7 +62,7 @@ class User(val name: String) {
                 getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
     }
 
-    fun invitationFrom(event: Party) {
+    fun invitationFrom(event: Event) {
         unconfirmedEvents.add(event)
     }
 
