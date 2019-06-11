@@ -1,5 +1,6 @@
 package edu.unq.desapp.eventeando.web
 
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @RunWith(SpringRunner::class)
 @WebMvcTest
+@Ignore
 class PingControllerTests {
 
     @Autowired

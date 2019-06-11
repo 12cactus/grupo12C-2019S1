@@ -1,17 +1,18 @@
 package edu.unq.desapp.eventeando.spending
 
-import edu.unq.desapp.eventeando.guest.Guest
+import edu.unq.desapp.eventeando.element.Product
+import edu.unq.desapp.eventeando.guest.User
 
 /**
  * TODO
  */
-class Spending(val cost: Int, val description: String) {
-    lateinit var guest: Guest
+class Spending(val cost: Double, val product: Product) {
+    lateinit var user: User
 
     /**
-     * Returns true if this corresponds to the guest received by parameter
+     * Returns true if this corresponds to the user received by parameter
      */
-    fun isFrom(aGuest: Guest): Boolean{
-        return guest == aGuest
+    fun isFrom(aUser: User): Boolean{
+        return user == aUser
     }
 }

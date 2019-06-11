@@ -2,7 +2,7 @@ package edu.unq.desapp.eventeando.event
 
 import ar.com.dgarcia.javaspec.api.contexts.TestContext
 import edu.unq.desapp.eventeando.spending.Spending
-import edu.unq.desapp.eventeando.guest.Guest
+import edu.unq.desapp.eventeando.guest.User
 import java.util.function.Supplier
 
 interface BasketContextTest : TestContext{
@@ -12,9 +12,9 @@ interface BasketContextTest : TestContext{
     fun spendings(): MutableList<Spending>
     fun spendings(supplier: Supplier<MutableList<Spending>>)
 
-    fun guests(): MutableList<Guest>
-    fun guests(supplier: Supplier<MutableList<Guest>>)
+    fun guests(): MutableList<User>
+    fun guests(supplier: Supplier<MutableList<User>>)
 
-    fun guest(): Guest
-    fun guest(supplier: Supplier<Guest>)
+    fun guest(): User
+    fun guest(supplier: Supplier<User>)
 }

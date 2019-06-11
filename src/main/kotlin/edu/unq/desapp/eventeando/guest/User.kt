@@ -3,13 +3,15 @@ package edu.unq.desapp.eventeando.guest
 import edu.unq.desapp.eventeando.checkingAccount.Movement
 import edu.unq.desapp.eventeando.checkingAccount.MovementType
 import edu.unq.desapp.eventeando.event.Event
-import edu.unq.desapp.eventeando.spending.Spending
+import edu.unq.desapp.eventeando.event.Party
+import edu.unq.desapp.eventeando.guest.exception.CannotConfirmAssitanceException
 import java.time.LocalDate
 
 /**
  * Models a person that has events and movements
  */
-class Guest(val name: String) {
+class User(val name: String) {
+    val unconfirmedEvents: MutableList<Party> = mutableListOf()
     val confirmedEvents: MutableList<Event> = mutableListOf()
     val movements: MutableList<Movement> = mutableListOf()
 
@@ -18,23 +20,6 @@ class Guest(val name: String) {
      */
     fun isConfirmedFor(anEvent: Event): Boolean {
         return this.confirmedEvents.contains(anEvent)
-    }
-
-    /**
-     * Attends to an event, If the event has not happened yet
-     */
-    fun attendTo(event: Event) {
-        if(LocalDate.now().isBefore(event.date)){
-            confirmedEvents.add(event)
-        }
-    }
-
-    /**
-     * Add spend to spendings of this, and load the spend to event
-     */
-    fun addSpend(spending: Spending, event: Event){
-        spending.guest = this
-        event.load(spending)
     }
 
     /**
@@ -75,5 +60,22 @@ class Guest(val name: String) {
     fun getSummary(): Double {
         return  getBankDeposits().fold(0.00) { total, movement -> total + movement.cost } -
                 getBankWithdrawals().fold(0.00) { total, movement -> total + movement.cost }
+    }
+
+    fun invitationFrom(event: Party) {
+        unconfirmedEvents.add(event)
+    }
+
+    /**
+     * Attends to an event, If the event has not happened yet or throw exception custom..
+     */
+    fun confirmAssistanceTo(event: Event) {
+        val now = LocalDate.now()
+        if(now.isBefore(event.date)){
+            unconfirmedEvents.remove(event)
+            confirmedEvents.add(event)
+        }else{
+            throw CannotConfirmAssitanceException("The confirmation date expired")
+        }
     }
 }
