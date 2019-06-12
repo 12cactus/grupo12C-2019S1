@@ -19,6 +19,6 @@ class Template(val title: String, val description: String) {
      * TODO
      */
     fun costPerPerson(): Double {
-        return elements.fold(0.00) { total, element -> element.totalForConfirmedGuests(1) + total }
+        return elements.fold(0.00) { total, element -> element.price() + total }
     }
 }
