@@ -2,7 +2,7 @@ package edu.unq.desapp.eventeando.event
 
 import ar.com.dgarcia.javaspec.api.JavaSpec
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner
-import edu.unq.desapp.eventeando.element.Commodity
+import edu.unq.desapp.eventeando.element.EventExpenseConfiguration
 import edu.unq.desapp.eventeando.element.Presentation
 import edu.unq.desapp.eventeando.element.PresentationPack
 import edu.unq.desapp.eventeando.element.Product
@@ -27,112 +27,81 @@ class PartyTest : JavaSpec<PartyContextTest>() {
     override fun define() {
         describe("Given a party") {
             context().party(Supplier {
-                Party(context().organizer(),
+                Party(context().organizers(),
                         context().partyDate(),
-                        context().limitDateToConfirm())
+                        context().limitDateToConfirm(),
+                        context().eventExpenseCalculator(),
+                        context().guests())
             })
             context().organizer(Supplier { User("an organizer") })
+            context().organizers(Supplier { mutableListOf(context().organizer()) })
             context().limitDateToConfirm(Supplier { nextWeek })
             context().partyDate(Supplier { nextWeek })
 
-            describe("when the party has no guests") {
-                describe("when requires total cost of party") {
-                    it("returns zero") {
-                        assertThat(context().party().totalCost()).isEqualTo(0.0)
-                    }
-                }
-            }
+            describe("when eventExpenseCalculator configuration is empty") {
+                context().guests(Supplier { mutableListOf<User>() })
+                context().eventExpenseCalculator(Supplier { EventExpenseCalculator.create(mutableListOf()) })
 
-            describe("when invite some guests") {
-                context().guest(Supplier { User("invitado1") })
-                context().otherGuest(Supplier { User("invitado2") })
-
-                beforeEach {
-                    context().party().invite(context().guest())
-                    context().party().invite(context().otherGuest())
-                }
-
-                it("Returns the exact number of guests") {
-                    assertThat(context().party().numberOfGuests()).isEqualTo(2)
-                }
-
-                describe("and a guest confirm assistance") {
-                    beforeEach { context().guest().confirmAssistanceTo(context().party()) }
-                    it("Returns the exact number of confirmed guests") {
-                        assertThat(context().party().numberOfConfirmedGuests()).isEqualTo(1)
-                    }
-                }
-            }
-
-            describe("whith one comodity") {
-                context().commodity(Supplier { Commodity(context().product(), 1.0) })
-                context().product(Supplier { Product("Cocacola", Presentation(2.5, PresentationPack.LITRE), 85.00) })
-
-                beforeEach {
-                    context().party().addCommodity(context().commodity())
-                }
-                it("Returns spending total zero") {
-                    assertThat(context().party().totalCost()).isEqualTo(0.0)
-                }
-
-                describe("with a guest confirmed the invitation") {
-                    context().guest(Supplier { User("moncho") })
-
-                    beforeEach {
-                        context().party().invite(context().guest())
-                        context().guest().confirmAssistanceTo(context().party())
-                    }
-                    it("Returns 85 as total cost of party") {
-                        assertThat(context().party().totalCost()).isEqualTo(85.0)
-                    }
-                }
-            }
-
-            describe("with two commodities") {
-                context().product(Supplier { Product("Cocacola", Presentation(2.5, PresentationPack.LITRE), 85.00) })
-                context().otherProduct(Supplier { Product("Pan", Presentation(0.5, PresentationPack.KILO), 50.00) })
-                context().commodity(Supplier { Commodity(context().product(), 1.0) })
-                context().otherCommodity(Supplier { Commodity(context().otherProduct(), 0.25) })
-
-                beforeEach {
-                    context().party().addCommodity(context().commodity())
-                    context().party().addCommodity(context().otherCommodity())
-                }
-                describe("and two confirmed Guest") {
-                    context().guest(Supplier { User("moncho") })
-                    context().otherGuest(Supplier { User("Dante") })
-
-                    beforeEach {
-                        context().party().invite(context().guest())
-                        context().party().invite(context().otherGuest())
-                        context().guest().confirmAssistanceTo(context().party())
-                        context().otherGuest().confirmAssistanceTo(context().party())
-                    }
-
-                    it("Returns 195 as total cost of party") {
-                        assertThat(context().party().totalCost()).isEqualTo(195.0)
-                    }
-                }
-
-            }
-
-            describe("With expired confirmation date") {
-                context().limitDateToConfirm(Supplier { weekAgo })
-                context().partyDate(Supplier { nextWeek })
-
-                describe("when guest want confirm assistance") {
-                    context().guest(Supplier { User("moncho") })
-                    context().otherGuest(Supplier { User("Dante") })
-
-                    beforeEach {
-                        context().party().invite(context().guest())
-                        context().party().invite(context().otherGuest())
-                    }
-
-                    itThrows(CannotConfirmAssitanceException::class.java, "cannot confirm assitance",
-                            { context().guest().confirmAssistanceTo(context().party()) },
-                            { e -> assertThat(e).hasMessage("The confirmation date expired") }
+                describe("and request event expenses to the party") {
+                    itThrows(MissingEventExpenseConfigurationException::class.java, "throws an error because dont have configurations",
+                            { context().party().totalCost() },
+                            { e -> assertThat(e).hasMessage("Cannot calculate. Event expense configuration is empty") }
                     )
+                }
+            }
+
+            describe("when eventExpenseCalculator has configuration ") {
+                context().product(Supplier { Product("Cocacola", Presentation(2.5, PresentationPack.LITRE), 80.00) })
+                context().otherProduct(Supplier { Product("Pan", Presentation(0.5, PresentationPack.KILO), 60.00) })
+                context().eventExpenseConfiguration(Supplier { EventExpenseConfiguration(context().product(), 0.5) })
+                context().otherEventExpenseConfiguration(Supplier { EventExpenseConfiguration(context().otherProduct(), 0.25) })
+                context().eventExpenseConfigurations(Supplier {
+                    mutableListOf(context().eventExpenseConfiguration(), context().otherEventExpenseConfiguration())
+                })
+                context().eventExpenseCalculator(Supplier { EventExpenseCalculator(context().eventExpenseConfigurations()) })
+
+                describe("and the party has no guests") {
+                    context().guests(Supplier { mutableListOf<User>() })
+                    describe("when requires total cost of party") {
+                        it("returns zero") {
+                            assertThat(context().party().totalCost()).isEqualTo(0.0)
+                        }
+                    }
+                }
+
+                describe("when invite some guests") {
+                    context().guest(Supplier { User("invitado1") })
+                    context().otherGuest(Supplier { User("invitado2") })
+                    context().guests(Supplier { mutableListOf(context().guest(), context().otherGuest()) })
+
+                    it("Returns the exact number of guests") {
+                        assertThat(context().party().numberOfGuests()).isEqualTo(2)
+                    }
+
+                    describe("and expired confirmation date") {
+                        context().limitDateToConfirm(Supplier { weekAgo })
+                        context().partyDate(Supplier { nextWeek })
+
+                        describe("when guest want confirm assistance") {
+                            itThrows(CannotConfirmAssitanceException::class.java, "cannot confirm assitance",
+                                    { context().guest().confirmAssistanceTo(context().party()) },
+                                    { e -> assertThat(e).hasMessage("The confirmation date expired") }
+                            )
+                        }
+                    }
+
+                    describe("and a guest confirm assistance") {
+                        beforeEach { context().guest().confirmAssistanceTo(context().party()) }
+                        it("Returns the exact number of confirmed guests") {
+                            assertThat(context().party().numberOfConfirmedGuests()).isEqualTo(1)
+                        }
+
+                        describe("when requires total cost of party") {
+                            it("returns the total for the confirmed guests") {
+                                assertThat(context().party().totalCost()).isEqualTo(140.0)
+                            }
+                        }
+                    }
                 }
             }
         }

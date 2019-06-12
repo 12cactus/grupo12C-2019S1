@@ -1,6 +1,6 @@
 package edu.unq.desapp.eventeando.event
 
-import edu.unq.desapp.eventeando.element.Commodity
+import edu.unq.desapp.eventeando.element.EventExpense
 import edu.unq.desapp.eventeando.guest.User
 import edu.unq.desapp.eventeando.guest.exception.CannotConfirmAssitanceException
 import java.time.LocalDate
@@ -9,14 +9,16 @@ import java.time.LocalDate
  * Models an abstract event thats have spendings, guests and confirmationDate.
  * To review
  */
-abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate, val shoppingList: MutableList<Commodity>){
-    val guests: MutableList<User> = mutableListOf()
-
+abstract class Event(val organizers: MutableList<User>,
+                     val date: LocalDate,
+                     val confirmationAllowedDate: LocalDate, //Por ahora todos van a tener esto.
+                     val guests: MutableList<User> = mutableListOf(),
+                     val eventExpenses: MutableList<EventExpense> = mutableListOf()) {
     /**
      * Returns a list with the guests who confirmed attendance
      */
-    fun confirmedGuests(): List<User>{
-        return guests.filter { guest -> guest.isConfirmedFor(this)  }
+    fun confirmedGuests(): List<User> {
+        return guests.filter { guest -> guest.isConfirmedFor(this) }
     }
 
     /**
@@ -30,16 +32,16 @@ abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate
     /**
      * Each subclass responsability. Returns total cost of the event
      */
-    abstract fun totalCost() : Double
+    abstract fun totalCost(): Double
 
     /**
      * TODO
      */
-    fun confirmAssistance(guest: User){
+    fun confirmAssistance(guest: User) {
         val today = LocalDate.now()
-        if(isConfirmationAllowedFor(today)){
+        if (isConfirmationAllowedFor(today)) {
             guest.attendTo(this)
-        }else{
+        } else {
             throw CannotConfirmAssitanceException("The confirmation date expired")
         }
     }
@@ -68,7 +70,17 @@ abstract class Event(val date: LocalDate, val confirmationAllowedDate: LocalDate
     /**
      * TODO
      */
-    fun addCommodity(commodity: Commodity) {
-        shoppingList.add(commodity)
+    fun addCommodity(commodity: EventExpense) {
+        eventExpenses.add(commodity)
     }
+}
+
+/**
+ * TODO
+ */
+enum class EventType(var value:String){
+    PARTY("Party"),
+    BASKET("Basket"),
+    POOLMONEY("PoolMoney")
+    //buy first, money first
 }
