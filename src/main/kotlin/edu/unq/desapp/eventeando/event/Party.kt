@@ -1,6 +1,6 @@
 package edu.unq.desapp.eventeando.event
 
-import edu.unq.desapp.eventeando.element.Commodity
+import edu.unq.desapp.eventeando.element.EventExpense
 import edu.unq.desapp.eventeando.guest.User
 import java.time.LocalDate
 
@@ -10,20 +10,24 @@ import java.time.LocalDate
  * does not just enter a list of guests to invite but also how long before
  * they are allowed confirmations
  */
-class Party(val organizer: User,
+class Party(organizers: MutableList<User>,
             date: LocalDate,
             confirmationAllowedDate: LocalDate,
-            shoppingList: MutableList<Commodity> = mutableListOf()) :
-        Event(date, confirmationAllowedDate, shoppingList) {
+            val eventExpenseCalculator: EventExpenseCalculator,
+            guests: MutableList<User> = mutableListOf(),
+            eventExpenses: MutableList<EventExpense> = mutableListOf()) :
+        Event(organizers, date, confirmationAllowedDate, guests, eventExpenses) {
 
     /**
      * TODO
      */
     override fun totalCost(): Double {
-        return shoppingList
-                .fold(0.00)
-                { total, commoodity ->
-                    total + commoodity.totalFromNeededPerPerson(numberOfConfirmedGuests())
-                }
+        val numberOfConfirmedGuests = numberOfConfirmedGuests()
+        return totalEventExpense() + eventExpenseCalculator.calculateTotalFor(numberOfConfirmedGuests)
+    }
+
+    private fun totalEventExpense(): Double {
+        return eventExpenses
+                .fold(0.00) { total, eventExpense -> total + eventExpense.price() }
     }
 }
