@@ -21,6 +21,13 @@ class Party(organizers: MutableList<User>,
     /**
      * TODO
      */
+    override fun costPerPerson(): Double {
+        throw NotImplementedError("Not implemented for this class ${this.javaClass}")
+    }
+
+    /**
+     * TODO
+     */
     override fun totalCost(): Double {
         val numberOfConfirmedGuests = numberOfConfirmedGuests()
         return totalEventExpense() + eventExpenseCalculator.calculateTotalFor(numberOfConfirmedGuests)

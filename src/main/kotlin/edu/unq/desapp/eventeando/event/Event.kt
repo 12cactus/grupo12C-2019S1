@@ -14,12 +14,6 @@ abstract class Event(val organizers: MutableList<User>,
                      val confirmationAllowedDate: LocalDate, //Por ahora todos van a tener esto.
                      val guests: MutableList<User> = mutableListOf(),
                      val eventExpenses: MutableList<EventExpense> = mutableListOf()) {
-    /**
-     * Returns a list with the guests who confirmed attendance
-     */
-    fun confirmedGuests(): List<User> {
-        return guests.filter { guest -> guest.isConfirmedFor(this) }
-    }
 
     /**
      * TODO
@@ -33,6 +27,11 @@ abstract class Event(val organizers: MutableList<User>,
      * Each subclass responsability. Returns total cost of the event
      */
     abstract fun totalCost(): Double
+
+    /**
+     * Each subclass responsability. Returns cost per person
+     */
+    abstract fun costPerPerson(): Double
 
     /**
      * TODO
@@ -58,6 +57,13 @@ abstract class Event(val organizers: MutableList<User>,
      */
     fun numberOfGuests(): Int {
         return guests.size
+    }
+
+    /**
+     * Returns a list with the guests who confirmed attendance
+     */
+    private fun confirmedGuests(): List<User> {
+        return guests.filter { guest -> guest.isConfirmedFor(this) }
     }
 
     /**
