@@ -13,7 +13,7 @@ import java.time.LocalDate
 class Party(organizers: MutableList<User>,
             date: LocalDate,
             confirmationAllowedDate: LocalDate,
-            val eventExpenseCalculator: EventExpenseCalculator,
+            private val eventExpenseCalculator: EventExpenseCalculator,
             guests: MutableList<User> = mutableListOf(),
             eventExpenses: MutableList<EventExpense> = mutableListOf()) :
         Event(organizers, date, confirmationAllowedDate, guests, eventExpenses) {

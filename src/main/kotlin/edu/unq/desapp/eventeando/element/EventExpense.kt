@@ -5,5 +5,9 @@ package edu.unq.desapp.eventeando.element
  * can response total Per confirmed guests using his proportion per person
  */
 interface EventExpense {
-    abstract fun price(): Double
+
+    /**
+     * TODO
+     */
+    fun price(): Double
 }

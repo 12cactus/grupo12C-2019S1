@@ -75,6 +75,9 @@ abstract class Event(val organizers: MutableList<User>,
     }
 }
 
+/**
+ * TODO
+ */
 enum class EventType(var value:String){
     PARTY("Party"),
     BASKET("Basket"),
